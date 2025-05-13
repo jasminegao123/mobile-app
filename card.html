@@ -2513,6 +2513,481 @@
     </div>
 </div>
 
+<!-- Login Screen -->
+<div class="wireframe">
+    <div class="wireframe-title">Login Screen</div>
+    <div class="wireframe-content">
+        <div class="mobile-frame">
+            <div style="height: 100%; background-color: #ffffff; position: relative;">
+                <!-- Login Content -->
+                <div style="display: flex; flex-direction: column; height: 100%; padding: 20px;">
+                    <!-- Language selector -->
+                    <div style="display: flex; justify-content: flex-end; padding: 10px 0;">
+                        <div style="font-size: 14px; color: #64748b; font-weight: 500;">EN</div>
+                    </div>
+                    
+                    <!-- Logo -->
+                    <div style="display: flex; justify-content: center; margin: 40px 0 30px;">
+                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #1a365d, #2c5282); border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                            <div style="font-size: 24px; font-weight: 700; color: white;">FA</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Welcome text -->
+                    <div style="text-align: center; margin-bottom: 36px;">
+                        <h1 style="font-size: 24px; font-weight: 700; color: #1e293b; margin-bottom: 10px;">Welcome Back</h1>
+                        <p style="font-size: 15px; color: #64748b; margin: 0;">Sign in to continue to your account</p>
+                    </div>
+                    
+                    <!-- Login Form -->
+                    <div style="margin-bottom: 24px;">
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 8px;">Email or Username</label>
+                            <input type="email" placeholder="Enter your email or username" style="width: 100%; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 15px; color: #1e293b; outline: none; transition: all 0.2s ease;">
+                        </div>
+                        
+                        <div style="margin-bottom: 16px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <label style="font-size: 14px; font-weight: 500; color: #1e293b;">Password</label>
+                                <a href="#" style="font-size: 14px; color: #2563eb; text-decoration: none; font-weight: 500;">Forgot password?</a>
+                            </div>
+                            <input type="password" placeholder="Enter your password" style="width: 100%; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 15px; color: #1e293b; outline: none; transition: all 0.2s ease;">
+                        </div>
+                        
+                        <!-- Remember me -->
+                        <div style="display: flex; align-items: center; margin-bottom: 24px;">
+                            <input type="checkbox" id="remember-me" style="width: 18px; height: 18px; margin-right: 8px; accent-color: #2563eb;">
+                            <label for="remember-me" style="font-size: 14px; color: #64748b;">Remember me</label>
+                        </div>
+                        
+                        <!-- Login Button -->
+                        <button style="width: 100%; padding: 16px; background: linear-gradient(135deg, #1a365d, #2c5282); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; margin-bottom: 20px;">
+                            Login
+                        </button>
+                        
+                        <!-- Alternative Login Methods -->
+                        <div style="text-align: center; margin-bottom: 24px;">
+                            <p style="font-size: 14px; color: #64748b; margin-bottom: 16px;">Or login with</p>
+                            
+                            <div style="display: flex; justify-content: center; gap: 16px;">
+                                <!-- Biometric Login -->
+                                <div style="width: 48px; height: 48px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                                    <i class="bi bi-fingerprint" style="font-size: 20px; color: #2563eb;"></i>
+                                </div>
+                                
+                                <!-- Google Login -->
+                                <div style="width: 48px; height: 48px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" style="fill: #ea4335;">
+                                        <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"></path>
+                                    </svg>
+                                </div>
+                                
+                                <!-- Apple Login -->
+                                <div style="width: 48px; height: 48px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" style="fill: #000000;">
+                                        <path d="M17.05,11.97 C17.0382233,10.8804679 17.4315929,9.82271381 18.16,9 C17.5182034,8.12554142 16.5484841,7.55268272 15.47,7.4 C14.3354982,7.24178033 13.1881483,7.90151387 12.58,7.9 C11.9345936,7.9 10.8969983,7.4261629 9.98,7.45 C8.74546502,7.48048697 7.60981998,8.0949926 6.92,9.06 C5.43979772,11.0517584 5.83377944,14.0371833 7.28,16.02 C7.99,16.99 8.84,18.07 9.98,18.05 C11.0901422,18.0246381 11.5034404,17.38 12.85,17.38 C14.1755177,17.38 14.5564151,18.05 15.73,18.05 C16.93,18.03 17.7,17.05 18.41,16.08 C18.9474444,15.4075399 19.3451446,14.6353619 19.58,13.81 C18.6,13.4035 17.9057304,12.4981921 17.05,11.97 L17.05,11.97 Z M14.95,6.33 C15.6275446,5.5223468 15.9646588,4.484005 15.89,3.44 C14.8969204,3.56999083 13.987489,4.06594099 13.31,4.83 C12.6357895,5.58449004 12.2773159,6.59258179 12.34,7.62 C13.3218563,7.63532857 14.2713268,7.15231885 14.95,6.33 L14.95,6.33 Z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sign up link -->
+                        <div style="text-align: center;">
+                            <p style="font-size: 14px; color: #64748b;">
+                                Don't have an account? <a href="#" style="color: #2563eb; text-decoration: none; font-weight: 500;">Sign up</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mobile Footer -->
+                <div class="mobile-footer">
+                    <div class="nav-item active">
+                        <i class="bi bi-house"></i>
+                        <div class="nav-label">Home</div>
+                    </div>
+                    <div class="nav-item">
+                        <i class="bi bi-credit-card"></i>
+                        <div class="nav-label">Cards</div>
+                    </div>
+                    <div class="nav-item">
+                        <i class="bi bi-wallet2"></i>
+                        <div class="nav-label">Wallet</div>
+                    </div>
+                    <div class="nav-item">
+                        <i class="bi bi-person"></i>
+                        <div class="nav-label">Profile</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sign Up Step 1 Screen -->
+<div class="wireframe">
+    <div class="wireframe-title">Sign Up Step 1</div>
+    <div class="wireframe-content">
+        <div class="mobile-frame">
+            <div class="mobile-header">
+                <div class="back-button"><i class="bi bi-arrow-left"></i></div>
+                <div class="screen-title">Create Account</div>
+                <div style="width: 36px;"></div>
+            </div>
+            <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                <!-- Registration Progress -->
+                <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div style="width: 32px; height: 32px; border-radius: 50%; background: #2563eb; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-bottom: 8px;">1</div>
+                        <div style="font-size: 12px; color: #2563eb; font-weight: 500;">Basic Info</div>
+                    </div>
+                    <div style="flex: 1; height: 2px; background: #e2e8f0; margin: 16px 8px 0 8px; position: relative;">
+                        <div style="position: absolute; width: 0%; height: 100%; background: #2563eb;"></div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div style="width: 32px; height: 32px; border-radius: 50%; background: #e2e8f0; color: #64748b; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-bottom: 8px;">2</div>
+                        <div style="font-size: 12px; color: #64748b; font-weight: 500;">Verification</div>
+                    </div>
+                </div>
+                
+                <!-- Form Content -->
+                <div style="background: white; border-radius: 16px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 20px;">Account Information</h2>
+                    
+                    <!-- Email Field -->
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 8px;">Email Address</label>
+                        <input type="email" placeholder="Enter your email" style="width: 100%; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 15px; color: #1e293b; outline: none; transition: all 0.2s ease;">
+                    </div>
+                    
+                    <!-- OTP Verification Field -->
+                    <div style="margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <label style="font-size: 14px; font-weight: 500; color: #1e293b;">Verification Code</label>
+                            <button style="background: none; border: none; font-size: 14px; color: #2563eb; font-weight: 500; cursor: pointer;">Send Code</button>
+                        </div>
+                        <input type="text" placeholder="Enter 6-digit code" style="width: 100%; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 15px; color: #1e293b; outline: none; transition: all 0.2s ease;">
+                    </div>
+                    
+                    <!-- Username Field -->
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 8px;">Username</label>
+                        <input type="text" placeholder="Choose a username" style="width: 100%; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 15px; color: #1e293b; outline: none; transition: all 0.2s ease;">
+                    </div>
+                    
+                    <!-- Password Field -->
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 8px;">Password</label>
+                        <input type="password" placeholder="Create a password" style="width: 100%; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 15px; color: #1e293b; outline: none; transition: all 0.2s ease;">
+                        <div style="margin-top: 6px; display: flex; gap: 6px;">
+                            <div style="height: 4px; flex: 1; background: #2563eb; border-radius: 2px;"></div>
+                            <div style="height: 4px; flex: 1; background: #2563eb; border-radius: 2px;"></div>
+                            <div style="height: 4px; flex: 1; background: #2563eb; border-radius: 2px;"></div>
+                            <div style="height: 4px; flex: 1; background: #e2e8f0; border-radius: 2px;"></div>
+                        </div>
+                        <div style="font-size: 12px; color: #64748b; margin-top: 6px;">Password strength: Good</div>
+                    </div>
+                    
+                    <!-- Confirm Password Field -->
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 8px;">Confirm Password</label>
+                        <input type="password" placeholder="Confirm your password" style="width: 100%; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 15px; color: #1e293b; outline: none; transition: all 0.2s ease;">
+                    </div>
+                    
+                    <!-- Referral Code Field -->
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 8px;">Referral Code (Optional)</label>
+                        <input type="text" placeholder="Enter referral code" style="width: 100%; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 15px; color: #1e293b; outline: none; transition: all 0.2s ease;">
+                    </div>
+                    
+                    <!-- Terms and Conditions -->
+                    <div style="display: flex; align-items: flex-start; margin-bottom: 24px;">
+                        <input type="checkbox" id="terms" style="width: 18px; height: 18px; margin-right: 8px; margin-top: 3px; accent-color: #2563eb;">
+                        <label for="terms" style="font-size: 14px; color: #64748b; line-height: 1.5;">
+                            I agree to the <a href="#" style="color: #2563eb; text-decoration: none; font-weight: 500;">Terms of Service</a> and <a href="#" style="color: #2563eb; text-decoration: none; font-weight: 500;">Privacy Policy</a>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Navigation Buttons -->
+                <div style="display: flex; gap: 16px;">
+                    <button style="flex: 1; padding: 16px; background: white; color: #64748b; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">
+                        Back
+                    </button>
+                    <button style="flex: 2; padding: 16px; background: linear-gradient(135deg, #1a365d, #2c5282); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">
+                        Next
+                    </button>
+                </div>
+                
+                <!-- Step Indicator -->
+                <div style="text-align: center; margin-top: 24px; font-size: 14px; color: #64748b;">
+                    Step 1 of 2
+                </div>
+            </div>
+            
+            <!-- Mobile Footer -->
+            <div class="mobile-footer">
+                <div class="nav-item active">
+                    <i class="bi bi-house"></i>
+                    <div class="nav-label">Home</div>
+                </div>
+                <div class="nav-item">
+                    <i class="bi bi-credit-card"></i>
+                    <div class="nav-label">Cards</div>
+                </div>
+                <div class="nav-item">
+                    <i class="bi bi-wallet2"></i>
+                    <div class="nav-label">Wallet</div>
+                </div>
+                <div class="nav-item">
+                    <i class="bi bi-person"></i>
+                    <div class="nav-label">Profile</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sign Up Step 2 Screen (Phone Verification) -->
+<div class="wireframe">
+    <div class="wireframe-title">Sign Up Step 2 (Phone Verification)</div>
+    <div class="wireframe-content">
+        <div class="mobile-frame">
+            <div class="mobile-header">
+                <div class="back-button"><i class="bi bi-arrow-left"></i></div>
+                <div class="screen-title">Phone Verification</div>
+                <div style="width: 36px;"></div>
+            </div>
+            <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                <!-- Registration Progress -->
+                <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div style="width: 32px; height: 32px; border-radius: 50%; background: #38bdf8; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-bottom: 8px;"><i class="bi bi-check" style="font-size: 16px;"></i></div>
+                        <div style="font-size: 12px; color: #38bdf8; font-weight: 500;">Basic Info</div>
+                    </div>
+                    <div style="flex: 1; height: 2px; background: #38bdf8; margin: 16px 8px 0 8px; position: relative;"></div>
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div style="width: 32px; height: 32px; border-radius: 50%; background: #2563eb; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-bottom: 8px;">2</div>
+                        <div style="font-size: 12px; color: #2563eb; font-weight: 500;">Verification</div>
+                    </div>
+                </div>
+                
+                <!-- Form Content -->
+                <div style="background: white; border-radius: 16px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 20px;">Verify Your Phone Number</h2>
+                    <p style="font-size: 14px; color: #64748b; margin-bottom: 20px;">We'll send a verification code to your phone to verify your identity.</p>
+                    
+                    <!-- Phone Number Field -->
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 8px;">Phone Number</label>
+                        <div style="display: flex; gap: 12px;">
+                            <!-- Country Code Selector -->
+                            <div style="width: 30%; position: relative;">
+                                <select style="width: 100%; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 15px; color: #1e293b; outline: none; transition: all 0.2s ease; appearance: none;">
+                                    <option>+1</option>
+                                    <option>+44</option>
+                                    <option>+86</option>
+                                    <option>+91</option>
+                                </select>
+                                <i class="bi bi-chevron-down" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: #64748b; pointer-events: none;"></i>
+                            </div>
+                            
+                            <!-- Phone Input -->
+                            <input type="tel" placeholder="Your phone number" style="width: 70%; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 15px; color: #1e293b; outline: none; transition: all 0.2s ease;">
+                        </div>
+                    </div>
+                    
+                    <!-- Send OTP Button -->
+                    <button style="width: 100%; padding: 16px; background: linear-gradient(135deg, #1a365d, #2c5282); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; margin-bottom: 20px;">
+                        Send OTP
+                    </button>
+                    
+                    <!-- Verification Code Section -->
+                    <div style="border-top: 1px dashed #e2e8f0; padding-top: 20px; margin-bottom: 20px;">
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #1e293b; margin-bottom: 16px;">Enter Verification Code</label>
+                        
+                        <!-- OTP Input Boxes -->
+                        <div style="display: flex; justify-content: space-between; gap: 10px; margin-bottom: 16px;">
+                            <input type="text" maxlength="1" style="width: 48px; height: 54px; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; font-size: 18px; font-weight: 600; text-align: center; outline: none;">
+                            <input type="text" maxlength="1" style="width: 48px; height: 54px; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; font-size: 18px; font-weight: 600; text-align: center; outline: none;">
+                            <input type="text" maxlength="1" style="width: 48px; height: 54px; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; font-size: 18px; font-weight: 600; text-align: center; outline: none;">
+                            <input type="text" maxlength="1" style="width: 48px; height: 54px; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; font-size: 18px; font-weight: 600; text-align: center; outline: none;">
+                            <input type="text" maxlength="1" style="width: 48px; height: 54px; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; font-size: 18px; font-weight: 600; text-align: center; outline: none;">
+                            <input type="text" maxlength="1" style="width: 48px; height: 54px; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; font-size: 18px; font-weight: 600; text-align: center; outline: none;">
+                        </div>
+                        
+                        <!-- Countdown Timer -->
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="font-size: 14px; color: #64748b;">
+                                <i class="bi bi-clock" style="margin-right: 6px;"></i>
+                                Code expires in: <span style="font-weight: 600; color: #1e293b;">02:59</span>
+                            </div>
+                            <button style="background: none; border: none; font-size: 14px; color: #2563eb; font-weight: 500; cursor: pointer;">
+                                Resend Code
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Buttons -->
+                <div style="display: flex; gap: 16px;">
+                    <button style="flex: 1; padding: 16px; background: white; color: #64748b; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">
+                        Back
+                    </button>
+                    <button style="flex: 2; padding: 16px; background: linear-gradient(135deg, #1a365d, #2c5282); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">
+                        Verify & Continue
+                    </button>
+                </div>
+                
+                <!-- Step Indicator -->
+                <div style="text-align: center; margin-top: 24px; font-size: 14px; color: #64748b;">
+                    Step 2 of 2
+                </div>
+            </div>
+            
+            <!-- Mobile Footer -->
+            <div class="mobile-footer">
+                <div class="nav-item active">
+                    <i class="bi bi-house"></i>
+                    <div class="nav-label">Home</div>
+                </div>
+                <div class="nav-item">
+                    <i class="bi bi-credit-card"></i>
+                    <div class="nav-label">Cards</div>
+                </div>
+                <div class="nav-item">
+                    <i class="bi bi-wallet2"></i>
+                    <div class="nav-label">Wallet</div>
+                </div>
+                <div class="nav-item">
+                    <i class="bi bi-person"></i>
+                    <div class="nav-label">Profile</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sign Up Success Screen -->
+<div class="wireframe">
+    <div class="wireframe-title">Sign Up Success</div>
+    <div class="wireframe-content">
+        <div class="mobile-frame">
+            <div class="mobile-header">
+                <div class="logo">FinApp</div>
+                <div class="header-icons">
+                    <div class="icon"><i class="bi bi-bell"></i></div>
+                    <div class="icon"><i class="bi bi-gear"></i></div>
+                </div>
+            </div>
+            <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                <!-- Success Content -->
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center;">
+                    <!-- Success Illustration -->
+                    <div style="width: 180px; height: 180px; margin-bottom: 30px; position: relative;">
+                        <!-- Success circle background -->
+                        <div style="width: 160px; height: 160px; background: #dcfce7; border-radius: 50%; position: absolute; top: 10px; left: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                            <!-- Confetti animation pattern -->
+                            <div style="position: absolute; width: 100%; height: 100%; opacity: 0.2; background-image: 
+                                radial-gradient(#34d399 2px, transparent 2px),
+                                radial-gradient(#34d399 2px, transparent 2px),
+                                radial-gradient(#34d399 2px, transparent 2px),
+                                radial-gradient(#34d399 2px, transparent 2px);
+                                background-size: 50px 50px;
+                                background-position: 0 0, 25px 25px, 25px 0, 0 25px;"></div>
+                            
+                            <!-- Success checkmark -->
+                            <div style="width: 90px; height: 90px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);">
+                                <i class="bi bi-check-lg" style="color: white; font-size: 50px;"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Decorative circles -->
+                        <div style="width: 20px; height: 20px; background: #a7f3d0; border-radius: 50%; position: absolute; top: 0; left: 70px; opacity: 0.7;"></div>
+                        <div style="width: 14px; height: 14px; background: #a7f3d0; border-radius: 50%; position: absolute; bottom: 30px; right: 30px; opacity: 0.7;"></div>
+                        <div style="width: 25px; height: 25px; background: #a7f3d0; border-radius: 50%; position: absolute; bottom: 10px; left: 20px; opacity: 0.7;"></div>
+                    </div>
+                    
+                    <!-- Headline and description -->
+                    <h1 style="font-size: 28px; font-weight: 700; color: #1e293b; margin-bottom: 16px;">Account Created!</h1>
+                    <p style="font-size: 16px; color: #64748b; margin-bottom: 30px; max-width: 300px;">Your account has been successfully created. You can now explore all the features offered by FinApp.</p>
+                    
+                    <!-- Account Information Summary -->
+                    <div style="width: 100%; background: white; border-radius: 16px; padding: 24px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                        <h2 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 16px; text-align: left;">Account Details</h2>
+                        
+                        <div style="display: flex; align-items: flex-start; margin-bottom: 16px;">
+                            <div style="min-width: 32px; height: 32px; background: #eef2ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                <i class="bi bi-envelope" style="color: #4f46e5; font-size: 16px;"></i>
+                            </div>
+                            <div style="text-align: left;">
+                                <div style="font-size: 14px; color: #64748b; margin-bottom: 4px;">Email</div>
+                                <div style="font-size: 15px; font-weight: 600; color: #1e293b;">user@example.com</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: flex-start;">
+                            <div style="min-width: 32px; height: 32px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                <i class="bi bi-phone" style="color: #059669; font-size: 16px;"></i>
+                            </div>
+                            <div style="text-align: left;">
+                                <div style="font-size: 14px; color: #64748b; margin-bottom: 4px;">Phone Number</div>
+                                <div style="font-size: 15px; font-weight: 600; color: #1e293b;">+1 (555) 123-4567</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Next Steps -->
+                    <div style="width: 100%; background: #f1f5fa; border-radius: 16px; padding: 20px; margin-bottom: 30px;">
+                        <h3 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 12px; text-align: left;">Recommended Next Steps</h3>
+                        
+                        <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                            <div style="min-width: 24px; height: 24px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; color: white; font-weight: 600; font-size: 14px;">1</div>
+                            <div style="font-size: 14px; color: #1e293b;">Complete your profile information</div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                            <div style="min-width: 24px; height: 24px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; color: white; font-weight: 600; font-size: 14px;">2</div>
+                            <div style="font-size: 14px; color: #1e293b;">Set up your security preferences</div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center;">
+                            <div style="min-width: 24px; height: 24px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; color: white; font-weight: 600; font-size: 14px;">3</div>
+                            <div style="font-size: 14px; color: #1e293b;">Apply for your first FinApp card</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Explore Button -->
+                    <button style="width: 100%; padding: 18px; background: linear-gradient(135deg, #1a365d, #2c5282); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <i class="bi bi-compass"></i>
+                        Explore Now
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Footer -->
+            <div class="mobile-footer">
+                <div class="nav-item active">
+                    <i class="bi bi-house"></i>
+                    <div class="nav-label">Home</div>
+                </div>
+                <div class="nav-item">
+                    <i class="bi bi-credit-card"></i>
+                    <div class="nav-label">Cards</div>
+                </div>
+                <div class="nav-item">
+                    <i class="bi bi-wallet2"></i>
+                    <div class="nav-label">Wallet</div>
+                </div>
+                <div class="nav-item">
+                    <i class="bi bi-person"></i>
+                    <div class="nav-label">Profile</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
             </div>

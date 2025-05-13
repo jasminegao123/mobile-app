@@ -1,0 +1,2523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Features - FinApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+
+        .wireframe-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Media queries for better layout */
+        @media screen and (min-width: 1600px) {
+            .wireframe-container {
+                max-width: 1800px;
+                gap: 3rem;
+            }
+        }
+        
+        @media screen and (max-width: 1280px) {
+            .wireframe-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .wireframe-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Add scroll-to-top button for convenience */
+        #scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        #scroll-top:hover {
+            opacity: 1;
+        }
+
+        .wireframe {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            height: 1600px;
+        }
+
+        .wireframe-title {
+            padding: 1rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .wireframe-content {
+            padding: 1rem;
+            height: calc(100% - 3.5rem);
+        }
+
+        .mobile-frame {
+            width: 100%;
+            max-width: 393px;
+            height: 1500px;
+            background-color: #ffffff;
+            border-radius: 44px;
+            overflow: hidden;
+            position: relative;
+            margin: 0 auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-header {
+            height: 64px;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            border-bottom: 1px solid #f1f5f9;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            width: 100%;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 20px;
+            color: #1e293b;
+            background: linear-gradient(135deg, #1a365d, #2c5282);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #64748b;
+        }
+
+        .icon:hover {
+            background-color: #e2e8f0;
+        }
+
+        .screen-content {
+            height: calc(100% - 64px);
+            overflow-y: auto;
+            position: relative;
+            background-color: #f8fafc;
+            padding-bottom: 80px;
+        }
+
+        .screen-header {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .back-button {
+            width: 36px;
+            height: 36px;
+            background-color: #f8fafc;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            font-size: 18px;
+            color: #64748b;
+            transition: all 0.2s ease;
+            border: 1px solid #f1f5f9;
+        }
+
+        .back-button:hover {
+            background-color: #f1f5f9;
+            color: #1a365d;
+        }
+
+        .screen-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        /* Card Display Styles */
+        .card-display {
+            background: linear-gradient(135deg, #1a365d, #2c5282);
+            border-radius: 24px;
+            padding: 32px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            margin: 20px;
+            box-shadow: 0 8px 16px rgba(26, 54, 93, 0.15);
+        }
+
+        .card-display::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+
+        .card-balance {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 16px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .card-number {
+            font-size: 18px;
+            letter-spacing: 2px;
+            margin: 24px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 24px;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            padding: 0 20px;
+            margin: 32px 0;
+        }
+
+        .action-item {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 20px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .action-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-icon {
+            width: 44px;
+            height: 44px;
+            background-color: #f1f5f9;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a365d;
+            font-size: 20px;
+        }
+
+        .action-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #1e293b;
+        }
+
+        /* Transaction List */
+        .transaction-list {
+            padding: 0 20px;
+        }
+
+        .transaction-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .transaction-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .view-all {
+            font-size: 14px;
+            color: #1a365d;
+            font-weight: 500;
+        }
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .transaction-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            font-size: 20px;
+        }
+
+        .transaction-info {
+            flex: 1;
+        }
+
+        .transaction-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .transaction-time {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .amount-positive {
+            color: #059669;
+        }
+
+        .amount-negative {
+            color: #dc2626;
+        }
+
+        /* Navigation */
+        .mobile-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #ffffff;
+            padding: 12px 20px;
+            border-top: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 0;
+            flex: 1;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item.active {
+            color: #1a365d;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            border-color: #1a365d;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #1a365d, #2c5282);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(26, 54, 93, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Freeze Card Specific Styles */
+        .freeze-card-status {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .freeze-status-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .freeze-status-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 20px;
+        }
+
+        .freeze-status-icon.active {
+            background: #dcfce7;
+            color: #059669;
+        }
+
+        .freeze-status-icon.frozen {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .freeze-status-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .freeze-status-description {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .freeze-action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wireframe-container">
+        <!-- No Card / Get Started Screen -->
+        <div class="wireframe">
+            <div class="wireframe-title">No Card / Get Started</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="mobile-header">
+                        <div class="logo">FinApp</div>
+                        <div class="header-icons">
+                            <div class="icon"><i class="bi bi-bell"></i></div>
+                            <div class="icon"><i class="bi bi-gear"></i></div>
+                        </div>
+                    </div>
+                    <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                        <!-- No Card Content -->
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center;">
+                            <!-- Card Illustration -->
+                            <div style="width: 200px; height: 200px; margin-bottom: 30px; position: relative;">
+                                <!-- Credit card illustration -->
+                                <div style="width: 180px; height: 110px; background: linear-gradient(135deg, #1a365d, #2c5282); border-radius: 16px; position: absolute; top: 50px; left: 10px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); overflow: hidden;">
+                                    <!-- Card pattern -->
+                                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 0.5%), radial-gradient(circle at 90% 80%, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 0.5%); opacity: 0.8;"></div>
+                                </div>
+                                <!-- Plus circle -->
+                                <div style="width: 80px; height: 80px; background: #2563eb; border-radius: 50%; position: absolute; top: 10px; right: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 16px rgba(37,99,235,0.2);">
+                                    <i class="bi bi-plus" style="color: white; font-size: 48px;"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Headline and description -->
+                            <h1 style="font-size: 28px; font-weight: 700; color: #1e293b; margin-bottom: 16px;">No Card Yet</h1>
+                            <p style="font-size: 16px; color: #64748b; margin-bottom: 30px; max-width: 300px;">Apply for your FinApp card to unlock powerful features and manage your finances on the go.</p>
+                            
+                            <!-- Card Benefits -->
+                            <div style="width: 100%; background: white; border-radius: 16px; padding: 24px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                                <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 16px; text-align: left;">Card Benefits</h2>
+                                
+                                <div style="display: flex; align-items: flex-start; margin-bottom: 16px;">
+                                    <div style="min-width: 32px; height: 32px; background: #eef2ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                        <i class="bi bi-shield-check" style="color: #4f46e5; font-size: 16px;"></i>
+                                    </div>
+                                    <div style="text-align: left;">
+                                        <div style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 4px;">Secure Payments</div>
+                                        <div style="font-size: 14px; color: #64748b;">Shop online and in-store with enhanced security</div>
+                                    </div>
+                                </div>
+                                
+                                <div style="display: flex; align-items: flex-start; margin-bottom: 16px;">
+                                    <div style="min-width: 32px; height: 32px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                        <i class="bi bi-lightning-charge" style="color: #059669; font-size: 16px;"></i>
+                                    </div>
+                                    <div style="text-align: left;">
+                                        <div style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 4px;">Instant Top-up</div>
+                                        <div style="font-size: 14px; color: #64748b;">Add funds to your card anytime, anywhere</div>
+                                    </div>
+                                </div>
+                                
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="min-width: 32px; height: 32px; background: #fef3c7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                        <i class="bi bi-gift" style="color: #d97706; font-size: 16px;"></i>
+                                    </div>
+                                    <div style="text-align: left;">
+                                        <div style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 4px;">Cashback & Rewards</div>
+                                        <div style="font-size: 14px; color: #64748b;">Earn rewards on purchases and payments</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Apply Button -->
+                            <button style="width: 100%; padding: 18px; background: linear-gradient(135deg, #1a365d, #2c5282); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                <i class="bi bi-credit-card"></i>
+                                Apply for Card
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Footer -->
+                    <div class="mobile-footer">
+                        <div class="nav-item">
+                            <i class="bi bi-house"></i>
+                            <div class="nav-label">Home</div>
+                        </div>
+                        <div class="nav-item active">
+                            <i class="bi bi-credit-card"></i>
+                            <div class="nav-label">Cards</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-wallet2"></i>
+                            <div class="nav-label">Wallet</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-person"></i>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card Dashboard Screen -->
+        <div class="wireframe">
+            <div class="wireframe-title">Card Dashboard</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <!-- Upper Nav Bar for Card Center -->
+                    <div class="mobile-header">
+                        <div class="back-button"><i class="bi bi-arrow-left"></i></div>
+                        <div class="screen-title">Card Center</div>
+                        <div style="width: 36px;"></div>
+                    </div>
+                    <div class="screen-content" style="background: #f8fafc; padding: 0;">
+                        <!-- Card Display Section -->
+                        <div style="margin: 20px 20px 16px 20px; perspective: 1000px;">
+                            <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #1a365d, #2c5282, #3182ce); border-radius: 16px; padding: 0; position: relative; box-shadow: 0 10px 20px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.1); overflow: hidden; transform-style: preserve-3d; transform: rotateX(5deg); transition: all 0.3s ease;">
+                                <!-- Card background pattern -->
+                                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 0.5%), radial-gradient(circle at 90% 80%, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 0.5%); opacity: 0.8;"></div>
+                                
+                                <!-- Card Chip -->
+                                <div style="position: absolute; top: 75px; left: 24px; width: 40px; height: 30px; background: linear-gradient(135deg, #d4af37, #f2d675, #d4af37); border-radius: 5px; overflow: hidden; box-shadow: 0 0 0 1px rgba(0,0,0,0.1); display: flex; flex-direction: column;">
+                                    <div style="height: 50%; display: flex;">
+                                        <div style="width: 25%; background-color: #d4af3777;"></div>
+                                        <div style="width: 25%; background-color: #d4af3755;"></div>
+                                        <div style="width: 25%; background-color: #d4af3733;"></div>
+                                        <div style="width: 25%; background-color: #d4af3711;"></div>
+                                    </div>
+                                    <div style="height: 50%; display: flex;">
+                                        <div style="width: 25%; background-color: #d4af3711;"></div>
+                                        <div style="width: 25%; background-color: #d4af3733;"></div>
+                                        <div style="width: 25%; background-color: #d4af3755;"></div>
+                                        <div style="width: 25%; background-color: #d4af3777;"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Mastercard Logo -->
+                                <div style="position: absolute; top: 20px; right: 20px; display: flex; align-items: center;">
+                                    <img src='https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png' alt='Mastercard' style='width: 50px; height: 32px; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));'>
+                                </div>
+                                
+                                <!-- Bank Logo -->
+                                <div style="position: absolute; top: 20px; left: 24px; font-size: 16px; font-weight: 700; color: rgba(255,255,255,0.9); letter-spacing: 1px; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">
+                                    FinApp<span style="opacity: 0.8; font-weight: 500; font-size: 14px; margin-left: 4px;">Platinum</span>
+                                </div>
+                                
+                                <!-- Card Number -->
+                                <div style="position: absolute; top: 120px; left: 24px; right: 24px; font-size: 19px; font-weight: 600; color: rgba(255,255,255,0.95); letter-spacing: 3px; font-family: 'Courier New', monospace; text-shadow: 0 1px 1px rgba(0,0,0,0.2);">
+                                    <span>****</span> <span>****</span> <span>****</span> <span style="letter-spacing: 2px;">4589</span>
+                                </div>
+                                
+                                <!-- Expiry and Cardholder -->
+                                <div style="position: absolute; bottom: 25px; left: 24px; right: 24px; display: flex; justify-content: space-between;">
+                                    <div style="display: flex; flex-direction: column;">
+                                        <span style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.7);">Valid Thru</span>
+                                        <span style="font-size: 14px; color: rgba(255,255,255,0.95); letter-spacing: 1px; font-weight: 600;">12/25</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column;">
+                                        <span style="font-size: 9px; text-transform: uppercase; color: rgba(255,255,255,0.7);">Cardholder</span>
+                                        <span style="font-size: 14px; color: rgba(255,255,255,0.95); letter-spacing: 1px; font-weight: 600;">JOHN DOE</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Shine effect -->
+                                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 40%, rgba(255,255,255,0) 60%); transform: translateX(-100%); animation: shine 5s infinite;"></div>
+                            </div>
+                            
+                            <!-- Balance display below card -->
+                            <div style="margin-top: 16px; display: flex; align-items: center; gap: 8px; padding: 0 4px;">
+                                <span style="font-size: 15px; color: #64748b;">Balance:</span>
+                                <span id="balance-hidden" style="font-size: 20px; font-weight: 700; letter-spacing: 1px;">****</span>
+                                <span id="balance-value" style="font-size: 20px; font-weight: 700; letter-spacing: 1px; display:none;">$12,345.67</span>
+                                <button onclick="var h=document.getElementById('balance-hidden');var v=document.getElementById('balance-value');if(h.style.display!=='none'){h.style.display='none';v.style.display='inline';}else{h.style.display='inline';v.style.display='none';}" style="background: none; border: none; cursor: pointer; color: #2563eb; font-size: 18px;"><i class="bi bi-eye"></i></button>
+                            </div>
+                            <style>
+                                @keyframes shine {
+                                    0% { transform: translateX(-100%); }
+                                    20% { transform: translateX(100%); }
+                                    100% { transform: translateX(100%); }
+                                }
+                            </style>
+                        </div>
+                        <!-- Quick Actions Row -->
+                        <div style="display: flex; justify-content: space-between; gap: 14px; margin: 0 20px 18px 20px;">
+                            <div style="flex: 1; background: #f1f5fa; border-radius: 16px; box-shadow: 0 1px 4px rgba(37,99,235,0.04); display: flex; flex-direction: column; align-items: center; padding: 14px 0; cursor: pointer;">
+                                <div style="background: #e0e7ef; color: #2563eb; border-radius: 10px; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 6px;"><i class="bi bi-wallet2"></i></div>
+                                <div style="font-size: 13px; color: #1a365d; font-weight: 500;">Top Up</div>
+                            </div>
+                            <div style="flex: 1; background: #f1f5fa; border-radius: 16px; box-shadow: 0 1px 4px rgba(37,99,235,0.04); display: flex; flex-direction: column; align-items: center; padding: 14px 0; cursor: pointer;">
+                                <div style="background: #e0e7ef; color: #2563eb; border-radius: 10px; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 6px;"><i class="bi bi-arrow-left-right"></i></div>
+                                <div style="font-size: 13px; color: #1a365d; font-weight: 500;">Transfer</div>
+                            </div>
+                            <div style="flex: 1; background: #f1f5fa; border-radius: 16px; box-shadow: 0 1px 4px rgba(37,99,235,0.04); display: flex; flex-direction: column; align-items: center; padding: 14px 0; cursor: pointer;">
+                                <div style="background: #e0e7ef; color: #2563eb; border-radius: 10px; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 6px;"><i class="bi bi-clock-history"></i></div>
+                                <div style="font-size: 13px; color: #1a365d; font-weight: 500;">History</div>
+                            </div>
+                            <div style="flex: 1; background: #f1f5fa; border-radius: 16px; box-shadow: 0 1px 4px rgba(37,99,235,0.04); display: flex; flex-direction: column; align-items: center; padding: 14px 0; cursor: pointer;">
+                                <div style="background: #e0e7ef; color: #2563eb; border-radius: 10px; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 6px;"><i class="bi bi-bar-chart"></i></div>
+                                <div style="font-size: 13px; color: #1a365d; font-weight: 500;">Analysis</div>
+                            </div>
+                        </div>
+                        <!-- Security Section -->
+                        <div style="background: #fff; border-radius: 16px; box-shadow: 0 2px 8px rgba(37,99,235,0.06); margin: 0 20px 16px 20px; padding: 0 0 8px 0;">
+                            <div style="font-size: 15px; font-weight: 700; color: #1a365d; padding: 16px 18px 8px 18px;">Security</div>
+                            <ul style="list-style: none; margin: 0; padding: 0 0 0 0;">
+                                <li style="display: flex; align-items: center; padding: 12px 18px; border-bottom: 1px solid #f1f5f9;"><i class="bi bi-snow" style="font-size: 18px; color: #2563eb; margin-right: 14px;"></i> Freeze Card <span style="margin-left:auto;"><input type="checkbox"></span></li>
+                                <li style="display: flex; align-items: center; padding: 12px 18px; border-bottom: 1px solid #f1f5f9;"><i class="bi bi-key" style="font-size: 18px; color: #2563eb; margin-right: 14px;"></i> Change PIN</li>
+                                <li style="display: flex; align-items: center; padding: 12px 18px;"><i class="bi bi-sliders" style="font-size: 18px; color: #2563eb; margin-right: 14px;"></i> Adjust Limit</li>
+                            </ul>
+                        </div>
+                        <!-- Management Section -->
+                        <div style="background: #fff; border-radius: 16px; box-shadow: 0 2px 8px rgba(37,99,235,0.06); margin: 0 20px 16px 20px; padding: 0 0 8px 0;">
+                            <div style="font-size: 15px; font-weight: 700; color: #1a365d; padding: 16px 18px 8px 18px;">Management</div>
+                            <ul style="list-style: none; margin: 0; padding: 0 0 0 0;">
+                                <li style="display: flex; align-items: center; padding: 12px 18px; border-bottom: 1px solid #f1f5f9;"><i class="bi bi-pencil" style="font-size: 18px; color: #2563eb; margin-right: 14px;"></i> Modify Information</li>
+                                <li style="display: flex; align-items: center; padding: 12px 18px; border-bottom: 1px solid #f1f5f9;"><i class="bi bi-arrow-repeat" style="font-size: 18px; color: #2563eb; margin-right: 14px;"></i> Replace Card</li>
+                                <li style="display: flex; align-items: center; padding: 12px 18px;"><i class="bi bi-exclamation-triangle" style="font-size: 18px; color: #dc2626; margin-right: 14px;"></i> Report Lost/Stolen</li>
+                            </ul>
+                        </div>
+                        <!-- Danger Zone Section (Moved from Card Settings screen) -->
+                        <div style="background: #fff; border-radius: 16px; box-shadow: 0 2px 8px rgba(37,99,235,0.06); margin: 0 20px 16px 20px; padding: 0 0 8px 0;">
+                            <div style="font-size: 15px; font-weight: 700; color: #ef4444; padding: 16px 18px 8px 18px;">Danger Zone</div>
+                            <ul style="list-style: none; margin: 0; padding: 0 0 0 0;">
+                                <li style="display: flex; align-items: center; padding: 12px 18px; border-bottom: 1px solid #f1f5f9; cursor: pointer;" onmouseover="this.style.backgroundColor='#fef2f2'" onmouseout="this.style.backgroundColor='transparent'">
+                                    <i class="bi bi-exclamation-triangle-fill" style="font-size: 18px; color: #dc2626; margin-right: 14px;"></i> 
+                                    <div style="flex: 1;">
+                                        <div style="font-size: 15px; font-weight: 600; color: #dc2626;">Report Lost/Stolen</div>
+                                        <div style="font-size: 12px; color: #64748b;">Immediately block card and request replacement</div>
+                                    </div>
+                                </li>
+                                <li style="display: flex; align-items: center; padding: 12px 18px; cursor: pointer;" onmouseover="this.style.backgroundColor='#fef2f2'" onmouseout="this.style.backgroundColor='transparent'">
+                                    <i class="bi bi-trash-fill" style="font-size: 18px; color: #dc2626; margin-right: 14px;"></i>
+                                    <div style="flex: 1;">
+                                        <div style="font-size: 15px; font-weight: 600; color: #dc2626;">Delete Card</div>
+                                        <div style="font-size: 12px; color: #64748b;">Permanently delete this card</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Analysis Section -->
+                        <div style="background: #fff; border-radius: 16px; box-shadow: 0 2px 8px rgba(37,99,235,0.06); margin: 0 20px 24px 20px; padding: 0 0 16px 0;">
+                            <div style="font-size: 15px; font-weight: 700; color: #1a365d; padding: 16px 18px 8px 18px;">Analysis</div>
+                            <div style="display: flex; gap: 10px; padding: 0 18px 12px 18px;">
+                                <button style="flex:1; background: #f1f5fa; border: none; border-radius: 8px; color: #2563eb; font-weight: 600; padding: 8px 0;">This Month</button>
+                                <button style="flex:1; background: #f1f5fa; border: none; border-radius: 8px; color: #64748b; font-weight: 600; padding: 8px 0;">Last Month</button>
+                                <button style="flex:1; background: #f1f5fa; border: none; border-radius: 8px; color: #64748b; font-weight: 600; padding: 8px 0;">Custom</button>
+                            </div>
+                            <div style="display: flex; gap: 10px; padding: 0 18px 12px 18px;">
+                                <div style="flex:1; background: #e0f2fe; border-radius: 10px; padding: 12px; display: flex; flex-direction: column; align-items: center;">
+                                    <i class="bi bi-arrow-down-circle" style="color: #059669; font-size: 20px;"></i>
+                                    <span style="font-size: 13px; color: #64748b;">Income</span>
+                                    <span style="font-size: 16px; font-weight: 700; color: #059669;">$5,000</span>
+                                </div>
+                                <div style="flex:1; background: #fee2e2; border-radius: 10px; padding: 12px; display: flex; flex-direction: column; align-items: center;">
+                                    <i class="bi bi-arrow-up-circle" style="color: #dc2626; font-size: 20px;"></i>
+                                    <span style="font-size: 13px; color: #64748b;">Expense</span>
+                                    <span style="font-size: 16px; font-weight: 700; color: #dc2626;">$2,500</span>
+                                </div>
+                                <div style="flex:1; background: #f1f5fa; border-radius: 10px; padding: 12px; display: flex; flex-direction: column; align-items: center;">
+                                    <i class="bi bi-cash-stack" style="color: #2563eb; font-size: 20px;"></i>
+                                    <span style="font-size: 13px; color: #64748b;">Net</span>
+                                    <span style="font-size: 16px; font-weight: 700; color: #2563eb;">$2,500</span>
+                                </div>
+                            </div>
+                            <div style="padding: 0 18px;">
+                                <div style="height: 80px; background: repeating-linear-gradient(90deg, #e0e7ef, #e0e7ef 2px, transparent 2px, transparent 20px); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 14px;">[Chart Placeholder]</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card Application Screen -->
+        <div class="wireframe">
+            <div class="wireframe-title">Card Application</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="mobile-header">
+                        <div class="back-button"><i class="bi bi-arrow-left"></i></div>
+                        <div class="screen-title">Apply for Card</div>
+                        <div style="width: 36px;"></div>
+                    </div>
+                    <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                        <!-- Progress Steps -->
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 30px; padding: 0 16px;">
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: #2563eb; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-bottom: 8px;">1</div>
+                                <div style="font-size: 12px; color: #2563eb; font-weight: 500;">Personal Info</div>
+                            </div>
+                            <div style="flex: 1; height: 2px; background: #e2e8f0; margin: 16px 8px 0 8px; position: relative;">
+                                <div style="position: absolute; width: 0%; height: 100%; background: #2563eb;"></div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: #e2e8f0; color: #64748b; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-bottom: 8px;">2</div>
+                                <div style="font-size: 12px; color: #64748b; font-weight: 500;">Verification</div>
+                            </div>
+                            <div style="flex: 1; height: 2px; background: #e2e8f0; margin: 16px 8px 0 8px;"></div>
+                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                <div style="width: 32px; height: 32px; border-radius: 50%; background: #e2e8f0; color: #64748b; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-bottom: 8px;">3</div>
+                                <div style="font-size: 12px; color: #64748b; font-weight: 500;">Confirmation</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Application Form -->
+                        <div style="background: white; border-radius: 16px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 20px;">Personal Information</h2>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="fullName">Full Name</label>
+                                <input type="text" id="fullName" class="form-input" placeholder="Enter your full name">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="dob">Date of Birth</label>
+                                <input type="date" id="dob" class="form-input">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="nationality">Nationality</label>
+                                <select id="nationality" class="form-input">
+                                    <option value="" disabled selected>Select nationality</option>
+                                    <option value="us">United States</option>
+                                    <option value="uk">United Kingdom</option>
+                                    <option value="ca">Canada</option>
+                                    <option value="au">Australia</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="address">Address</label>
+                                <textarea id="address" class="form-input" rows="3" placeholder="Enter your full address"></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Employment Information -->
+                        <div style="background: white; border-radius: 16px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 20px;">Employment Information</h2>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="employment">Employment Status</label>
+                                <select id="employment" class="form-input">
+                                    <option value="" disabled selected>Select employment status</option>
+                                    <option value="employed">Employed</option>
+                                    <option value="self-employed">Self-Employed</option>
+                                    <option value="student">Student</option>
+                                    <option value="unemployed">Unemployed</option>
+                                    <option value="retired">Retired</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="employer">Employer Name</label>
+                                <input type="text" id="employer" class="form-input" placeholder="Enter your employer name">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="income">Monthly Income</label>
+                                <input type="text" id="income" class="form-input" placeholder="Enter your monthly income">
+                            </div>
+                        </div>
+                        
+                        <!-- Terms and Conditions -->
+                        <div style="margin-bottom: 24px;">
+                            <div style="display: flex; align-items: start; margin-bottom: 16px;">
+                                <input type="checkbox" id="terms" style="margin-top: 3px; margin-right: 10px;">
+                                <label for="terms" style="font-size: 14px; color: #64748b;">I agree to the <a href="#" style="color: #2563eb; text-decoration: none;">Terms and Conditions</a> and <a href="#" style="color: #2563eb; text-decoration: none;">Privacy Policy</a></label>
+                            </div>
+                            
+                            <div style="display: flex; align-items: start;">
+                                <input type="checkbox" id="marketing" style="margin-top: 3px; margin-right: 10px;">
+                                <label for="marketing" style="font-size: 14px; color: #64748b;">I agree to receive marketing communications about products and services</label>
+                            </div>
+                        </div>
+                        
+                        <!-- Continue Button -->
+                        <button class="btn-primary">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Application Progress / Pending Screen -->
+        <div class="wireframe">
+            <div class="wireframe-title">Application Progress / Pending</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="mobile-header">
+                        <div class="logo">FinApp</div>
+                        <div class="header-icons">
+                            <div class="icon"><i class="bi bi-bell"></i></div>
+                            <div class="icon"><i class="bi bi-gear"></i></div>
+                        </div>
+                    </div>
+                    <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                        <!-- Application Progress Content -->
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center;">
+                            <!-- Progress Illustration -->
+                            <div style="width: 160px; height: 160px; margin-bottom: 30px; background: #f1f5f9; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative;">
+                                <!-- Circular progress -->
+                                <div style="width: 140px; height: 140px; border-radius: 50%; border: 6px solid #e2e8f0; border-top-color: #2563eb; animation: spin 2s linear infinite;"></div>
+                                <!-- Hourglass icon -->
+                                <div style="position: absolute; font-size: 50px; color: #1e293b;">
+                                    <i class="bi bi-hourglass-split"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Headline and description -->
+                            <h1 style="font-size: 28px; font-weight: 700; color: #1e293b; margin-bottom: 16px;">Application in Progress</h1>
+                            <p style="font-size: 16px; color: #64748b; margin-bottom: 30px; max-width: 300px;">We're reviewing your application. This may take up to 2 business days.</p>
+                            
+                            <!-- Status Card -->
+                            <div style="width: 100%; background: white; border-radius: 16px; padding: 24px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                                <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 16px; text-align: left;">Application Status</h2>
+                                
+                                <div style="display: flex; flex-direction: column; gap: 16px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="font-size: 15px; color: #1e293b;">Status</div>
+                                        <div style="font-size: 15px; font-weight: 600; color: #f59e0b; display: flex; align-items: center; gap: 6px;">
+                                            <i class="bi bi-clock-history"></i> Under Review
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="font-size: 15px; color: #1e293b;">Application ID</div>
+                                        <div style="font-size: 15px; font-weight: 600; color: #1e293b;">#APP12345678</div>
+                                    </div>
+                                    
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="font-size: 15px; color: #1e293b;">Submitted On</div>
+                                        <div style="font-size: 15px; font-weight: 600; color: #1e293b;">Apr 12, 2024</div>
+                                    </div>
+                                    
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="font-size: 15px; color: #1e293b;">Est. Completion</div>
+                                        <div style="font-size: 15px; font-weight: 600; color: #1e293b;">Apr 14, 2024</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div style="width: 100%; display: flex; flex-direction: column; gap: 16px;">
+                                <button style="width: 100%; padding: 16px; background: white; color: #2563eb; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <i class="bi bi-file-text"></i>
+                                    View Application Details
+                                </button>
+                                
+                                <button style="width: 100%; padding: 16px; background: white; color: #2563eb; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <i class="bi bi-headset"></i>
+                                    Contact Support
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Footer -->
+                    <div class="mobile-footer">
+                        <div class="nav-item">
+                            <i class="bi bi-house"></i>
+                            <div class="nav-label">Home</div>
+
+                        </div>
+                        <div class="nav-item active">
+                            <i class="bi bi-credit-card"></i>
+                            <div class="nav-label">Cards</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-wallet2"></i>
+                            <div class="nav-label">Wallet</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-person"></i>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Application Approved / Card Issued Screen -->
+        <div class="wireframe">
+            <div class="wireframe-title">Application Approved / Card Issued</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="mobile-header">
+                        <div class="logo">FinApp</div>
+                        <div class="header-icons">
+                            <div class="icon"><i class="bi bi-bell"></i></div>
+                            <div class="icon"><i class="bi bi-gear"></i></div>
+                        </div>
+                    </div>
+                    <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                        <!-- Application Approved Content -->
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center;">
+                            <!-- Success Illustration -->
+                            <div style="width: 160px; height: 160px; margin-bottom: 30px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                                <!-- Confetti animation -->
+                                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogICAgPGRlZnM+CiAgICAgICAgPHBhdHRlcm4gaWQ9ImNvbmZldHRpIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgICAgICAgICAgIDxjaXJjbGUgZmlsbD0iI2VmNDQ0NCIgY3g9IjEwIiBjeT0iMTAiIHI9IjIiLz4KICAgICAgICAgICAgPGNpcmNsZSBmaWxsPSIjM2I4MmY2IiBjeD0iMzAiIGN5PSIyMCIgcj0iMyIvPgogICAgICAgICAgICA8Y2lyY2xlIGZpbGw9IiNlYzQ4OTkiIGN4PSI0NSIgY3k9IjQwIiByPSIyLjUiLz4KICAgICAgICAgICAgPGNpcmNsZSBmaWxsPSIjZWFiMzA4IiBjeD0iNjAiIGN5PSIzMCIgcj0iMiIvPgogICAgICAgICAgICA8Y2lyY2xlIGZpbGw9IiMxMGI5ODEiIGN4PSI4MCIgY3k9IjE1IiByPSIzLjUiLz4KICAgICAgICA8L3BhdHRlcm4+CiAgICA8L2RlZnM+CiAgICA8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2NvbmZldHRpKSIgb3BhY2l0eT0iMC40Ij4KICAgICAgICA8YW5pbWF0ZSBhdHRyaWJ1dGVOYW1lPSJ5IiBmcm9tPSIwIiB0bz0iMTAwIiBkdXI9IjVzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIvPgogICAgPC9yZWN0Pgo8L3N2Zz4='); opacity: 0.7;"></div>
+                                <div style="font-size: 70px; color: #059669; z-index: 2;">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Headline and description -->
+                            <h1 style="font-size: 28px; font-weight: 700; color: #1e293b; margin-bottom: 16px;">Card Approved!</h1>
+                            <p style="font-size: 16px; color: #64748b; margin-bottom: 30px; max-width: 300px;">Congratulations! Your card application has been approved and your card is on its way.</p>
+                            
+                            <!-- Card in Mail Illustration -->
+                            <div style="width: 100%; background: white; border-radius: 16px; padding: 24px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative;">
+                                <div style="display: flex; align-items: center; justify-content: center; padding: 20px;">
+                                    <!-- Envelope -->
+                                    <div style="width: 180px; height: 110px; background: #e2e8f0; border-radius: 8px; position: relative; display: flex; align-items: center; justify-content: center; transform: rotate(-5deg);">
+                                        <!-- Envelope flap -->
+                                        <div style="width: 160px; height: 80px; background: #e2e8f0; position: absolute; top: -40px; border-radius: 160px 160px 0 0; border-bottom: 2px dashed #94a3b8; transform-origin: bottom; transform: rotateX(60deg);"></div>
+                                        
+                                        <!-- Card peeking out -->
+                                        <div style="width: 140px; height: 85px; background: linear-gradient(135deg, #1a365d, #2c5282); border-radius: 10px; transform: translateY(-10px); box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></div>
+                                        
+                                        <!-- FinApp logo on envelope -->
+                                        <div style="position: absolute; bottom: 10px; right: 10px; font-size: 12px; font-weight: 700; color: #1e293b;">FinApp</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Shipping Info -->
+                                <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin: 0 0 16px 0; text-align: left;">Shipping Information</h2>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <div style="font-size: 15px; color: #64748b;">Estimated Arrival</div>
+                                    <div style="font-size: 15px; font-weight: 600; color: #1e293b;">Apr 20, 2024</div>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <div style="font-size: 15px; color: #64748b;">Tracking Number</div>
+                                    <div style="font-size: 15px; font-weight: 600; color: #1e293b;">TRK1234567890</div>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                                    <div style="font-size: 15px; color: #64748b;">Delivery Address</div>
+                                    <div style="font-size: 15px; font-weight: 600; color: #1e293b; text-align: right;">123 Main Street<br>Apt 4B<br>New York, NY 10001</div>
+                                </div>
+                            </div>
+                            
+                            <!-- What's Next Instructions -->
+                            <div style="width: 100%; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; margin-bottom: 30px;">
+                                <h3 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 16px; text-align: left;">What's Next?</h3>
+                                
+                                <div style="display: flex; align-items: flex-start; margin-bottom: 12px;">
+                                    <div style="width: 24px; height: 24px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; margin-right: 12px; flex-shrink: 0;">1</div>
+                                    <div style="text-align: left; font-size: 14px; color: #1e293b;">Wait for your card to arrive (5-7 business days)</div>
+                                </div>
+                                
+                                <div style="display: flex; align-items: flex-start; margin-bottom: 12px;">
+                                    <div style="width: 24px; height: 24px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; margin-right: 12px; flex-shrink: 0;">2</div>
+                                    <div style="text-align: left; font-size: 14px; color: #1e293b;">Activate your card using the Card Center in this app</div>
+                                </div>
+                                
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="width: 24px; height: 24px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; margin-right: 12px; flex-shrink: 0;">3</div>
+                                    <div style="text-align: left; font-size: 14px; color: #1e293b;">Set up your PIN and start using your card</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div style="width: 100%; display: flex; flex-direction: column; gap: 16px;">
+                                <button style="width: 100%; padding: 16px; background: linear-gradient(135deg, #1a365d, #2c5282); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <i class="bi bi-credit-card"></i>
+                                    Go to Card Center
+                                </button>
+                                
+                                <button style="width: 100%; padding: 16px; background: white; color: #2563eb; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <i class="bi bi-house"></i>
+                                    Back to Home
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Footer -->
+                    <div class="mobile-footer">
+                        <div class="nav-item">
+                            <i class="bi bi-house"></i>
+                            <div class="nav-label">Home</div>
+
+                        </div>
+                        <div class="nav-item active">
+                            <i class="bi bi-credit-card"></i>
+                            <div class="nav-label">Cards</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-wallet2"></i>
+                            <div class="nav-label">Wallet</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-person"></i>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card Activation Screen -->
+        <div class="wireframe">
+            <div class="wireframe-title">Card Activation</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="mobile-header">
+                        <div class="back-button"><i class="bi bi-arrow-left"></i></div>
+                        <div class="screen-title">Activate Card</div>
+                        <div style="width: 36px;"></div>
+                    </div>
+                    <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                        <!-- Card Details Section -->
+                        <div style="background: white; border-radius: 16px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 24px;">Card Activation</h2>
+                            
+                            <!-- Card Input Section -->
+                            <div class="form-group" style="margin-bottom: 20px;">
+                                <label class="form-label" for="cardNumber">Card Number</label>
+                                <input type="text" id="cardNumber" class="form-input" placeholder="Enter 16-digit card number" maxlength="19">
+                            </div>
+                            
+                            <!-- Email Information -->
+                            <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                                <i class="bi bi-envelope" style="color: #0284c7; font-size: 16px; margin-right: 8px;"></i>
+                                <p style="font-size: 14px; color: #64748b; margin: 0;">Verification code will be sent to <span style="font-weight: 600;">767676767@gmail.com</span></p>
+                            </div>
+                            
+                            <!-- Security Note -->
+                            <div style="display: flex; align-items: center;">
+                                <i class="bi bi-shield-check" style="color: #2563eb; margin-right: 8px; font-size: 16px;"></i>
+                                <p style="font-size: 14px; color: #64748b; margin: 0;">Your card information is encrypted and secure</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Verification Section -->
+                        <div id="verification-section" style="background: white; border-radius: 16px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 20px;">Verification</h2>
+                            
+                            <!-- OTP Input -->
+                            <div class="form-group" style="margin-bottom: 12px;">
+                                <label class="form-label" for="otp">Enter 6-Digit Code</label>
+                                <div style="display: flex; justify-content: space-between; gap: 8px;">
+                                    <input type="text" class="form-input" style="width: 48px; height: 56px; text-align: center; font-size: 20px; padding: 0;" maxlength="1">
+                                    <input type="text" class="form-input" style="width: 48px; height: 56px; text-align: center; font-size: 20px; padding: 0;" maxlength="1">
+                                    <input type="text" class="form-input" style="width: 48px; height: 56px; text-align: center; font-size: 20px; padding: 0;" maxlength="1">
+                                    <input type="text" class="form-input" style="width: 48px; height: 56px; text-align: center; font-size: 20px; padding: 0;" maxlength="1">
+                                    <input type="text" class="form-input" style="width: 48px; height: 56px; text-align: center; font-size: 20px; padding: 0;" maxlength="1">
+                                    <input type="text" class="form-input" style="width: 48px; height: 56px; text-align: center; font-size: 20px; padding: 0;" maxlength="1">
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: center; margin-bottom: 0;">
+                                <button style="background: none; border: none; color: #2563eb; font-size: 14px; font-weight: 500; cursor: pointer;">Resend Code (2:45)</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <button class="btn-primary">Activate Card</button>
+                            <button style="width: 100%; padding: 16px; background: white; color: #64748b; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 16px; font-weight: 500; cursor: pointer;">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PIN Setup Screen -->
+        <div class="wireframe">
+            <div class="wireframe-title">PIN Setup</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="mobile-header">
+                        <div class="back-button"><i class="bi bi-arrow-left"></i></div>
+                        <div class="screen-title">Set PIN</div>
+                        <div style="width: 36px;"></div>
+                    </div>
+                    <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                        <!-- Success Message -->
+                        <div style="background: #dcfce7; border-radius: 16px; padding: 20px; margin-bottom: 24px; text-align: center; display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: 60px; height: 60px; background: #059669; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                                <i class="bi bi-check-lg" style="color: white; font-size: 30px;"></i>
+                            </div>
+                            <h2 style="font-size: 18px; font-weight: 600; color: #065f46; margin-bottom: 8px;">Card Activated!</h2>
+                            <p style="font-size: 14px; color: #065f46; margin-bottom: 0;">Your card has been successfully activated. Now set your PIN for secure transactions.</p>
+                        </div>
+                        
+                        <!-- PIN Entry Form -->
+                        <div style="background: white; border-radius: 16px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 20px;">Create Your PIN</h2>
+                            
+                            <p style="font-size: 14px; color: #64748b; margin-bottom: 16px;">Enter a 4-digit PIN number that you'll use for ATM withdrawals and purchases.</p>
+                            
+                            <!-- PIN Input -->
+                            <div style="margin-bottom: 30px;">
+                                <label class="form-label">Enter PIN</label>
+                                <div style="display: flex; justify-content: space-between; gap: 10px; margin-bottom: 16px;">
+                                    <input type="password" class="form-input" style="width: 60px; height: 60px; text-align: center; font-size: 24px; padding: 0;" maxlength="1">
+                                    <input type="password" class="form-input" style="width: 60px; height: 60px; text-align: center; font-size: 24px; padding: 0;" maxlength="1">
+                                    <input type="password" class="form-input" style="width: 60px; height: 60px; text-align: center; font-size: 24px; padding: 0;" maxlength="1">
+                                    <input type="password" class="form-input" style="width: 60px; height: 60px; text-align: center; font-size: 24px; padding: 0;" maxlength="1">
+                                </div>
+                                
+                                <label class="form-label">Confirm PIN</label>
+                                <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                    <input type="password" class="form-input" style="width: 60px; height: 60px; text-align: center; font-size: 24px; padding: 0;" maxlength="1">
+                                    <input type="password" class="form-input" style="width: 60px; height: 60px; text-align: center; font-size: 24px; padding: 0;" maxlength="1">
+                                    <input type="password" class="form-input" style="width: 60px; height: 60px; text-align: center; font-size: 24px; padding: 0;" maxlength="1">
+                                    <input type="password" class="form-input" style="width: 60px; height: 60px; text-align: center; font-size: 24px; padding: 0;" maxlength="1">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- PIN Guidelines -->
+                        <div style="background: #f1f5f9; border-radius: 16px; padding: 20px; margin-bottom: 24px;">
+                            <h3 style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 12px;">PIN Guidelines</h3>
+                            
+                            <ul style="margin: 0; padding-left: 30px; color: #64748b; font-size: 14px;">
+                                <li style="margin-bottom: 8px;">Use a 4-digit PIN that's easy for you to remember but hard for others to guess</li>
+                                <li style="margin-bottom: 8px;">Avoid sequential numbers (e.g., 1234, 9876)</li>
+                                <li style="margin-bottom: 8px;">Avoid repeating numbers (e.g., 1111, 2222)</li>
+                                <li style="margin-bottom: 8px;">Don't use easily guessable numbers like birth dates</li>
+                                <li>Never share your PIN with anyone, including bank staff</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Warning Note -->
+                        <div style="display: flex; align-items: flex-start; background: #fff7ed; border: 1px solid #ffedd5; border-radius: 12px; padding: 16px; margin-bottom: 24px;">
+                            <i class="bi bi-exclamation-triangle" style="color: #f97316; font-size: 18px; margin-right: 12px;"></i>
+                            <p style="font-size: 14px; color: #9a3412; margin: 0;">For security reasons, you cannot reset your PIN online. If you forget your PIN, you'll need to contact customer support or visit a branch.</p>
+                        </div>
+                        
+                        <!-- Set PIN Button -->
+                        <button class="btn-primary">Set PIN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PIN Setup Success / Explore Card Features Screen -->
+        <div class="wireframe">
+            <div class="wireframe-title">PIN Setup Success / Explore Card Features</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="mobile-header">
+                        <div class="logo">FinApp</div>
+                        <div class="header-icons">
+                            <div class="icon"><i class="bi bi-bell"></i></div>
+                            <div class="icon"><i class="bi bi-gear"></i></div>
+                        </div>
+                    </div>
+                    <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                        <!-- PIN Success Content -->
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center;">
+                            <!-- Success Illustration -->
+                            <div style="width: 160px; height: 160px; margin-bottom: 30px; position: relative;">
+                                <!-- Success circle -->
+                                <div style="width: 160px; height: 160px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                                    <div style="font-size: 70px; color: #059669;">
+                                        <i class="bi bi-check-circle-fill"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- Lock icon -->
+                                <div style="position: absolute; bottom: 0; right: 0; width: 60px; height: 60px; background: #059669; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 6px solid #dcfce7; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                    <i class="bi bi-shield-lock-fill" style="color: white; font-size: 28px;"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Headline and description -->
+                            <h1 style="font-size: 28px; font-weight: 700; color: #1e293b; margin-bottom: 16px;">PIN Set Successfully!</h1>
+                            <p style="font-size: 16px; color: #64748b; margin-bottom: 30px; max-width: 300px;">Your card is now fully activated and ready to use for purchases and ATM withdrawals.</p>
+                            
+                            <!-- Ready to Use Card Section -->
+                            <div style="width: 100%; background: white; border-radius: 16px; padding: 24px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                                <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 20px; text-align: left;">Your Card is Ready</h2>
+                                
+                                <!-- Card Display (Mini) -->
+                                <div style="width: 100%; height: 120px; background: linear-gradient(135deg, #1a365d, #2c5282); border-radius: 16px; position: relative; margin-bottom: 20px; box-shadow: 0 8px 16px rgba(26, 54, 93, 0.15); overflow: hidden;">
+                                    <!-- Card pattern -->
+                                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 0.5%), radial-gradient(circle at 90% 80%, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 0.5%); opacity: 0.8;"></div>
+                                    
+                                    <!-- Card logo -->
+                                    <div style="position: absolute; top: 16px; left: 20px; font-size: 16px; font-weight: 700; color: rgba(255,255,255,0.9); letter-spacing: 1px;">
+                                        FinApp<span style="opacity: 0.8; font-weight: 500; font-size: 14px; margin-left: 4px;">Platinum</span>
+                                    </div>
+                                    
+                                    <!-- Mastercard Logo -->
+                                    <div style="position: absolute; top: 16px; right: 20px; display: flex; align-items: center;">
+                                        <img src='https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png' alt='Mastercard' style='width: 40px; height: 26px;'>
+                                    </div>
+                                    
+                                    <!-- Card Number -->
+                                    <div style="position: absolute; bottom: 40px; left: 20px; right: 20px; font-size: 16px; color: rgba(255,255,255,0.95); letter-spacing: 2px; font-family: 'Courier New', monospace;">
+                                        <span>****</span> <span>****</span> <span>****</span> <span>4589</span>
+                                    </div>
+                                    
+                                    <!-- Name and Expiry -->
+                                    <div style="position: absolute; bottom: 16px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="font-size: 12px; color: rgba(255,255,255,0.95);">JOHN DOE</div>
+                                        <div style="font-size: 12px; color: rgba(255,255,255,0.95);">12/25</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Card Status Indicators -->
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <div style="width: 12px; height: 12px; background: #059669; border-radius: 50%;"></div>
+                                        <div style="font-size: 14px; color: #059669; font-weight: 500;">Active</div>
+                                    </div>
+                                    
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <div style="width: 12px; height: 12px; background: #059669; border-radius: 50%;"></div>
+                                        <div style="font-size: 14px; color: #059669; font-weight: 500;">PIN Set</div>
+                                    </div>
+                                    
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <div style="width: 12px; height: 12px; background: #059669; border-radius: 50%;"></div>
+                                        <div style="font-size: 14px; color: #059669; font-weight: 500;">Ready to Use</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Available Balance -->
+                                <div style="display: flex; justify-content: space-between; padding: 12px 0; border-top: 1px solid #f1f5f9; margin-bottom: 8px;">
+                                    <div style="font-size: 14px; color: #64748b;">Available Balance</div>
+                                    <div style="font-size: 16px; font-weight: 600; color: #1e293b;">$0.00</div>
+                                </div>
+                                
+                                <!-- Top Up Now Button -->
+                                <button style="width: 100%; padding: 14px; background: linear-gradient(to right, #1a365d, #2563eb); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">
+                                    Top Up Now
+                                </button>
+                            </div>
+                            
+                            <!-- Explore Card Features -->
+                            <div style="width: 100%; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; margin-bottom: 30px;">
+                                <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 20px; text-align: left;">Explore Card Features</h2>
+                                
+                                <div style="text-align: left; margin-bottom: 20px;">
+                                    <div style="display: flex; margin-bottom: 16px; cursor: pointer;">
+                                        <div style="width: 40px; height: 40px; background: #eef2ff; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0;">
+                                            <i class="bi bi-credit-card" style="color: #4f46e5; font-size: 18px;"></i>
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 4px;">Card Dashboard</div>
+                                            <div style="font-size: 14px; color: #64748b;">View your card details and manage settings</div>
+                                        </div>
+                                        <i class="bi bi-chevron-right" style="margin-left: auto; color: #64748b; align-self: center;"></i>
+                                    </div>
+                                    
+                                    <div style="display: flex; margin-bottom: 16px; cursor: pointer;">
+                                        <div style="width: 40px; height: 40px; background: #dcfce7; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0;">
+                                            <i class="bi bi-wallet2" style="color: #059669; font-size: 18px;"></i>
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 4px;">Top Up Card</div>
+                                            <div style="font-size: 14px; color: #64748b;">Add funds to start using your card</div>
+                                        </div>
+                                        <i class="bi bi-chevron-right" style="margin-left: auto; color: #64748b; align-self: center;"></i>
+                                    </div>
+                                    
+                                    <div style="display: flex; margin-bottom: 16px; cursor: pointer;">
+                                        <div style="width: 40px; height: 40px; background: #fee2e2; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0;">
+                                            <i class="bi bi-shield-lock" style="color: #dc2626; font-size: 18px;"></i>
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 4px;">Security Settings</div>
+                                            <div style="font-size: 14px; color: #64748b;">Manage card limits and security options</div>
+                                        </div>
+                                        <i class="bi bi-chevron-right" style="margin-left: auto; color: #64748b; align-self: center;"></i>
+                                    </div>
+                                    
+                                    <div style="display: flex; cursor: pointer;">
+                                        <div style="width: 40px; height: 40px; background: #f0f9ff; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0;">
+                                            <i class="bi bi-question-circle" style="color: #0284c7; font-size: 18px;"></i>
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 4px;">Help & Support</div>
+                                            <div style="font-size: 14px; color: #64748b;">Get help with your card and account</div>
+                                        </div>
+                                        <i class="bi bi-chevron-right" style="margin-left: auto; color: #64748b; align-self: center;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div style="width: 100%; display: flex; flex-direction: column; gap: 16px;">
+                                <button style="width: 100%; padding: 16px; background: linear-gradient(135deg, #1a365d, #2c5282); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <i class="bi bi-credit-card"></i>
+                                    Go to Card Dashboard
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Footer -->
+                    <div class="mobile-footer">
+                        <div class="nav-item">
+                            <i class="bi bi-house"></i>
+                            <div class="nav-label">Home</div>
+
+                        </div>
+                        <div class="nav-item active">
+                            <i class="bi bi-credit-card"></i>
+                            <div class="nav-label">Cards</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-wallet2"></i>
+                            <div class="nav-label">Wallet</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-person"></i>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card Top-up Screen -->
+        <div class="wireframe">
+            <div class="wireframe-title">Card Top-up</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="mobile-header">
+                        <div class="back-button"><i class="bi bi-arrow-left"></i></div>
+                        <div class="screen-title">Top Up Card</div>
+                        <div style="width: 36px;"></div>
+                    </div>
+                    <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                        <!-- Card Summary -->
+                        <div style="background: white; border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                                <div style="width: 48px; height: 48px; border-radius: 12px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
+                                    <img src='https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png' alt='Mastercard' style='width: 36px; height: 22px;'>
+                                </div>
+                                <div>
+                                    <div style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 4px;">FinApp Platinum</div>
+                                    <div style="font-size: 14px; color: #64748b;">**** 4589</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 12px 0; border-top: 1px solid #f1f5f9;">
+                                <div style="font-size: 14px; color: #64748b;">Available Balance</div>
+                                <div style="font-size: 16px; font-weight: 600; color: #1e293b;">$2,450.00</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Fiat Account Section -->
+                        <div style="background: white; border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 20px;">Fiat Account</h2>
+                            
+                            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                                <div style="width: 48px; height: 48px; border-radius: 12px; background: #f0f9ff; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
+                                    <i class="bi bi-wallet2" style="font-size: 24px; color: #0284c7;"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-size: 16px; font-weight: 600; color: #1e293b; margin-bottom: 4px;">Fiat Account Balance</div>
+                                    <div style="font-size: 14px; color: #64748b;">Available for top-up</div>
+                                </div>
+                                <div style="font-size: 18px; font-weight: 700; color: #1e293b;">$5,280.45</div>
+                            </div>
+                            
+                            <div style="background: #f0f9ff; border-radius: 12px; padding: 12px; display: flex; align-items: flex-start;">
+                                <i class="bi bi-info-circle" style="color: #0284c7; font-size: 16px; margin-right: 12px; margin-top: 2px;"></i>
+                                <p style="font-size: 14px; color: #0369a1; margin: 0;">All top-ups are processed from your connected Fiat account. Funds will be transferred instantly with no fees.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Amount Selection -->
+                        <div style="background: white; border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                            <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 20px;">Select Amount</h2>
+                            
+                            <!-- Quick Amount Buttons -->
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+                                <button style="padding: 12px; background: #f1f5f9; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; color: #1e293b; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.backgroundColor='#e2e8f0'" onmouseout="this.style.backgroundColor='#f1f5f9'">$50</button>
+                                <button style="padding: 12px; background: #f1f5f9; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; color: #1e293b; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.backgroundColor='#e2e8f0'" onmouseout="this.style.backgroundColor='#f1f5f9'">$100</button>
+                                <button style="padding: 12px; background: #f1f5f9; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; color: #1e293b; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.backgroundColor='#e2e8f0'" onmouseout="this.style.backgroundColor='#f1f5f9'">$200</button>
+                                <button style="padding: 12px; background: #f1f5f9; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; color: #1e293b; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.backgroundColor='#e2e8f0'" onmouseout="this.style.backgroundColor='#f1f5f9'">$500</button>
+                                <button style="padding: 12px; background: #f1f5f9; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; color: #1e293b; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.backgroundColor='#e2e8f0'" onmouseout="this.style.backgroundColor='#f1f5f9'">$1000</button>
+                                <button style="padding: 12px; background: #eef2ff; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; color: #4f46e5; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.backgroundColor='#e0e7ff'" onmouseout="this.style.backgroundColor='#eef2ff'">Other</button>
+                            </div>
+                            
+                            <!-- Custom Amount Input -->
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label class="form-label" for="custom-amount">Custom Amount</label>
+                                <div style="display: flex; align-items: center;">
+                                    <div style="padding: 14px; background: #f1f5f9; border: 1px solid #e2e8f0; border-right: none; border-top-left-radius: 12px; border-bottom-left-radius: 12px; color: #64748b; font-weight: 600;">$</div>
+                                    <input type="text" id="custom-amount" class="form-input" style="border-top-left-radius: 0; border-bottom-left-radius: 0;" placeholder="Enter amount">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Continue Button -->
+                        <button class="btn-primary">Continue to Top-up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Transaction History Screen -->
+        <div class="wireframe">
+            <div class="wireframe-title">Transaction History</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="mobile-header">
+                        <div class="back-button"><i class="bi bi-arrow-left"></i></div>
+                        <div class="screen-title">Transaction History</div>
+                        <div class="icon"><i class="bi bi-filter"></i></div>
+                    </div>
+                    <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                        <!-- Transaction History Content -->
+                        <div style="display: flex; flex-direction: column;">
+                            <!-- Card Summary -->
+                            <div style="background: white; border-radius: 16px; padding: 16px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="display: flex; align-items: center;">
+                                        <div style="width: 40px; height: 40px; border-radius: 10px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                            <img src='https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png' alt='Mastercard' style='width: 30px; height: 18px;'>
+                                        </div>
+                                        <div>
+                                            <div style="font-size: 15px; font-weight: 600; color: #1e293b;">FinApp Platinum</div>
+                                            <div style="font-size: 13px; color: #64748b;">**** 4589</div>
+                                        </div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-size: 13px; color: #64748b;">Balance</div>
+                                        <div style="font-size: 16px; font-weight: 600; color: #1e293b;">$2,450.00</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tabs Navigation -->
+                            <div style="display: flex; margin-bottom: 20px; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                                <button id="tab-transactions" style="flex: 1; background: #2563eb; color: white; border: none; padding: 14px; font-size: 14px; font-weight: 600; cursor: pointer;">
+                                    Transactions
+                                </button>
+                                <button id="tab-top-ups" style="flex: 1; background: white; color: #64748b; border: none; padding: 14px; font-size: 14px; font-weight: 600; cursor: pointer;">
+                                    Top-up History
+                                </button>
+                            </div>
+                            
+                            <!-- Filter Section -->
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                                <div style="flex: 1; position: relative;">
+                                    <select style="width: 100%; background: white; color: #1e293b; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px; font-size: 14px; font-weight: 500; appearance: none; cursor: pointer;">
+                                        <option>This Month</option>
+                                        <option>Last Month</option>
+                                        <option>Last 3 Months</option>
+                                        <option>Custom Range</option>
+                                    </select>
+                                    <i class="bi bi-calendar3" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #64748b;"></i>
+                                </div>
+                                <div style="width: 12px;"></div>
+                                <div style="width: 44px;">
+                                    <button style="width: 100%; height: 100%; background: white; color: #64748b; border: 1px solid #e2e8f0; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                                        <i class="bi bi-funnel"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Tab Content: Transactions (Active by default) -->
+                            <div id="content-transactions" style="display: block;">
+                                <!-- Transaction List -->
+                                <div style="margin-bottom: 16px;">
+                                    <div style="font-size: 13px; font-weight: 600; color: #64748b; margin-bottom: 10px; display: flex; align-items: center;">
+                                        <div style="width: 16px; height: 2px; background: #cbd5e1; margin-right: 8px;"></div>
+                                        Today
+                                    </div>
+                                    
+                                    <!-- Transaction Item -->
+                                    <div style="background: white; border-radius: 16px; padding: 14px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                        <div style="display: flex; align-items: center;">
+                                            <div style="width: 44px; height: 44px; background: #fee2e2; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 12px; color: #dc2626; font-size: 18px;">
+                                                <i class="bi bi-cart"></i>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <div style="font-size: 15px; font-weight: 600; color: #1e293b; margin-bottom: 2px;">Shopping</div>
+                                                <div style="font-size: 13px; color: #64748b;">Today, 3:45 PM</div>
+                                            </div>
+                                            <div style="font-size: 15px; font-weight: 600; color: #dc2626;">-$120.50</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Transaction Item -->
+                                    <div style="background: white; border-radius: 16px; padding: 14px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                        <div style="display: flex; align-items: center;">
+                                            <div style="width: 44px; height: 44px; background: #fee2e2; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 12px; color: #dc2626; font-size: 18px;">
+                                                <i class="bi bi-cup-straw"></i>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <div style="font-size: 15px; font-weight: 600; color: #1e293b; margin-bottom: 2px;">Coffee Shop</div>
+                                                <div style="font-size: 13px; color: #64748b;">Today, 10:20 AM</div>
+                                            </div>
+                                            <div style="font-size: 15px; font-weight: 600; color: #dc2626;">-$4.75</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 16px;">
+                                    <div style="font-size: 13px; font-weight: 600; color: #64748b; margin-bottom: 10px; display: flex; align-items: center;">
+                                        <div style="width: 16px; height: 2px; background: #cbd5e1; margin-right: 8px;"></div>
+                                        Yesterday
+                                    </div>
+                                    
+                                    <!-- Transaction Item -->
+                                    <div style="background: white; border-radius: 16px; padding: 14px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                        <div style="display: flex; align-items: center;">
+                                            <div style="width: 44px; height: 44px; background: #fee2e2; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 12px; color: #dc2626; font-size: 18px;">
+                                                <i class="bi bi-basket"></i>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <div style="font-size: 15px; font-weight: 600; color: #1e293b; margin-bottom: 2px;">Grocery Store</div>
+                                                <div style="font-size: 13px; color: #64748b;">Yesterday, 6:30 PM</div>
+                                            </div>
+                                            <div style="font-size: 15px; font-weight: 600; color: #dc2626;">-$43.20</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Transaction Item -->
+                                    <div style="background: white; border-radius: 16px; padding: 14px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                        <div style="display: flex; align-items: center;">
+                                            <div style="width: 44px; height: 44px; background: #e0f2fe; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 12px; color: #0284c7; font-size: 18px;">
+                                                <i class="bi bi-arrow-return-left"></i>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <div style="font-size: 15px; font-weight: 600; color: #1e293b; margin-bottom: 2px;">Refund: T-Shirt Store</div>
+                                                <div style="font-size: 13px; color: #64748b;">Yesterday, 11:30 AM</div>
+                                            </div>
+                                            <div style="font-size: 15px; font-weight: 600; color: #059669;">+$35.00</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tab Content: Top-up History (Hidden by default) -->
+                            <div id="content-top-ups" style="display: none;">
+                                <!-- Fiat Account Info -->
+                                <div style="background: #f0f9ff; border-radius: 12px; padding: 14px; margin-bottom: 20px; border: 1px solid #bae6fd;">
+                                    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                                        <i class="bi bi-info-circle" style="color: #0284c7; font-size: 16px; margin-right: 8px;"></i>
+                                        <div style="font-size: 14px; font-weight: 600; color: #0369a1;">Fiat Account</div>
+                                    </div>
+                                    <p style="font-size: 13px; color: #0369a1; margin: 0;">All top-ups are processed from your connected Fiat account. The current balance in your Fiat account is <span style="font-weight: 600;">$5,280.45</span></p>
+                                </div>
+                                
+                                <!-- Top-up List -->
+                                <div style="margin-bottom: 16px;">
+                                    <div style="font-size: 13px; font-weight: 600; color: #64748b; margin-bottom: 10px; display: flex; align-items: center;">
+                                        <div style="width: 16px; height: 2px; background: #cbd5e1; margin-right: 8px;"></div>
+                                        This Week
+                                    </div>
+                                    
+                                    <!-- Top-up Item -->
+                                    <div style="background: white; border-radius: 16px; padding: 14px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                        <div style="display: flex; align-items: center;">
+                                            <div style="width: 44px; height: 44px; background: #dcfce7; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 12px; color: #059669; font-size: 18px;">
+                                                <i class="bi bi-wallet2"></i>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <div style="font-size: 15px; font-weight: 600; color: #1e293b; margin-bottom: 2px;">Fiat Account Top-up</div>
+                                                <div style="font-size: 13px; color: #64748b;">Today, 10:20 AM</div>
+                                            </div>
+                                            <div style="font-size: 15px; font-weight: 600; color: #059669;">+$500.00</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 16px;">
+                                    <div style="font-size: 13px; font-weight: 600; color: #64748b; margin-bottom: 10px; display: flex; align-items: center;">
+                                        <div style="width: 16px; height: 2px; background: #cbd5e1; margin-right: 8px;"></div>
+                                        Last Week
+                                    </div>
+                                    
+                                    <!-- Top-up Item -->
+                                    <div style="background: white; border-radius: 16px; padding: 14px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                        <div style="display: flex; align-items: center;">
+                                            <div style="width: 44px; height: 44px; background: #dcfce7; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 12px; color: #059669; font-size: 18px;">
+                                                <i class="bi bi-wallet2"></i>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <div style="font-size: 15px; font-weight: 600; color: #1e293b; margin-bottom: 2px;">Fiat Account Top-up</div>
+                                                <div style="font-size: 13px; color: #64748b;">Apr 5, 2:15 PM</div>
+                                            </div>
+                                            <div style="font-size: 15px; font-weight: 600; color: #059669;">+$200.00</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Top-up Item -->
+                                    <div style="background: white; border-radius: 16px; padding: 14px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                        <div style="display: flex; align-items: center;">
+                                            <div style="width: 44px; height: 44px; background: #dcfce7; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 12px; color: #059669; font-size: 18px;">
+                                                <i class="bi bi-wallet2"></i>
+                                            </div>
+                                            <div style="flex: 1;">
+                                                <div style="font-size: 15px; font-weight: 600; color: #1e293b; margin-bottom: 2px;">Fiat Account Top-up</div>
+                                                <div style="font-size: 13px; color: #64748b;">Apr 3, 11:45 AM</div>
+                                            </div>
+                                            <div style="font-size: 15px; font-weight: 600; color: #059669;">+$150.00</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pagination Indicator -->
+                            <div style="display: flex; justify-content: center; margin: 24px 0 8px 0;">
+                                <div style="width: 32px; height: 4px; background: #e2e8f0; border-radius: 2px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab Switch JavaScript -->
+                    <script>
+                        // This is just a placeholder for the actual functionality
+                        // In a real implementation, this would be implemented with proper event listeners
+                        document.getElementById('tab-transactions').onclick = function() {
+                            document.getElementById('tab-transactions').style.background = '#2563eb';
+                            document.getElementById('tab-transactions').style.color = 'white';
+                            document.getElementById('tab-top-ups').style.background = 'white';
+                            document.getElementById('tab-top-ups').style.color = '#64748b';
+                            document.getElementById('content-transactions').style.display = 'block';
+                            document.getElementById('content-top-ups').style.display = 'none';
+                        };
+                        
+                        document.getElementById('tab-top-ups').onclick = function() {
+                            document.getElementById('tab-top-ups').style.background = '#2563eb';
+                            document.getElementById('tab-top-ups').style.color = 'white';
+                            document.getElementById('tab-transactions').style.background = 'white';
+                            document.getElementById('tab-transactions').style.color = '#64748b';
+                            document.getElementById('content-top-ups').style.display = 'block';
+                            document.getElementById('content-transactions').style.display = 'none';
+                        };
+                    </script>
+                    
+                    <!-- Mobile Footer -->
+                    <div class="mobile-footer">
+                        <div class="nav-item">
+                            <i class="bi bi-house"></i>
+                            <div class="nav-label">Home</div>
+
+                        </div>
+                        <div class="nav-item active">
+                            <i class="bi bi-credit-card"></i>
+                            <div class="nav-label">Cards</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-wallet2"></i>
+                            <div class="nav-label">Wallet</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-person"></i>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Transactions List -->
+        <div id="transactions-list" style="display:none; margin: 18px 20px 0 20px; background: #fff; border-radius: 16px; box-shadow: 0 2px 8px rgba(37,99,235,0.06); padding: 0;">
+            <div style="padding: 18px; display: flex; align-items: center; border-bottom: 1px solid #f1f5f9;">
+                <div style="background: #fee2e2; border-radius: 10px; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #dc2626; margin-right: 14px;"><i class="bi bi-cart"></i></div>
+                <div style="flex: 1;">
+                    <div style="font-size: 15px; font-weight: 600; color: #1a365d;">Shopping</div>
+                    <div style="font-size: 12px; color: #64748b;">2024-03-28 15:45</div>
+                </div>
+                <div style="font-size: 16px; font-weight: 600; color: #dc2626;">-$120.50</div>
+            </div>
+            <div style="padding: 18px; display: flex; align-items: center; border-bottom: 1px solid #f1f5f9;">
+                <div style="background: #e0e7ef; border-radius: 10px; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #2563eb; margin-right: 14px;"><i class="bi bi-arrow-left-right"></i></div>
+                <div style="flex: 1;">
+                    <div style="font-size: 15px; font-weight: 600; color: #1a365d;">Transfer</div>
+                    <div style="font-size: 12px; color: #64748b;">2024-03-20 09:10</div>
+                </div>
+                <div style="font-size: 16px; font-weight: 600; color: #dc2626;">-$75.00</div>
+            </div>
+            <div style="padding: 18px; display: flex; align-items: center;">
+                <div style="background: #e0f2fe; border-radius: 10px; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #2563eb; margin-right: 14px;"><i class="bi bi-arrow-return-left"></i></div>
+                <div style="flex: 1;">
+                    <div style="font-size: 15px; font-weight: 600; color: #1a365d;">Refund</div>
+                    <div style="font-size: 12px; color: #64748b;">2024-03-18 14:20</div>
+                </div>
+                <div style="font-size: 16px; font-weight: 600; color: #059669;">+$45.00</div>
+            </div>
+        </div>
+        
+        <!-- Error/Blocked State Screen -->
+        <div class="wireframe">
+            <div class="wireframe-title">Error/Blocked State</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="mobile-header">
+                        <div class="back-button"><i class="bi bi-arrow-left"></i></div>
+                        <div class="screen-title">Card Status</div>
+                        <div style="width: 36px;"></div>
+                    </div>
+                    <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                        <!-- Error/Blocked State Content -->
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center;">
+                            <!-- Error Illustration -->
+                            <div style="width: 160px; height: 160px; margin-bottom: 30px; background: #fee2e2; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                                <div style="font-size: 70px; color: #dc2626;">
+                                    <i class="bi bi-x-octagon-fill"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Headline and description -->
+                            <h1 style="font-size: 28px; font-weight: 700; color: #1e293b; margin-bottom: 16px;">Card Blocked</h1>
+                            <p style="font-size: 16px; color: #64748b; margin-bottom: 30px; max-width: 300px;">Your card has been temporarily blocked due to suspicious activity detected on your account.</p>
+                            
+                            <!-- Error Details -->
+                            <div style="width: 100%; background: white; border-radius: 16px; padding: 24px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                                <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 20px; text-align: left;">Status Details</h2>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+                                    <div style="font-size: 15px; color: #64748b;">Card Status</div>
+                                    <div style="font-size: 15px; font-weight: 600; color: #dc2626; display: flex; align-items: center; gap: 8px;">
+                                        <i class="bi bi-lock-fill"></i> Blocked
+                                    </div>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+                                    <div style="font-size: 15px; color: #64748b;">Reason</div>
+                                    <div style="font-size: 15px; font-weight: 600; color: #1e293b; text-align: right;">Suspicious Activity</div>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+                                    <div style="font-size: 15px; color: #64748b;">Date & Time</div>
+                                    <div style="font-size: 15px; font-weight: 600; color: #1e293b;">Apr 12, 2024 • 3:45 PM</div>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                    <div style="font-size: 15px; color: #64748b;">Reference No.</div>
+                                    <div style="font-size: 15px; font-weight: 600; color: #1e293b;">#INC-5698742</div>
+                                </div>
+                            </div>
+                            
+                            <!-- What to Do Now -->
+                            <div style="width: 100%; background: #f7fee7; border: 1px solid #dcfce7; border-radius: 16px; padding: 20px; margin-bottom: 30px;">
+                                <h3 style="font-size: 16px; font-weight: 600; color: #166534; margin-bottom: 16px; text-align: left;">What to Do Now?</h3>
+                                
+                                <div style="text-align: left; margin-bottom: 12px;">
+                                    <div style="display: flex; margin-bottom: 12px;">
+                                        <div style="width: 28px; height: 28px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; flex-shrink: 0; color: #166534; font-weight: 700;">
+                                            1
+                                        </div>
+                                        <div style="font-size: 14px; color: #166534;">Contact our support team to verify your recent transactions.</div>
+                                    </div>
+                                    
+                                    <div style="display: flex; margin-bottom: 12px;">
+                                        <div style="width: 28px; height: 28px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; flex-shrink: 0; color: #166534; font-weight: 700;">
+                                            2
+                                        </div>
+                                        <div style="font-size: 14px; color: #166534;">Confirm your identity through our security verification process.</div>
+                                    </div>
+                                    
+                                    <div style="display: flex;">
+                                        <div style="width: 28px; height: 28px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; flex-shrink: 0; color: #166534; font-weight: 700;">
+                                            3
+                                        </div>
+                                        <div style="font-size: 14px; color: #166534;">Once verified, your card will be unblocked within 24 hours.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div style="width: 100%; display: flex; flex-direction: column; gap: 16px;">
+                                <button style="width: 100%; padding: 16px; background: linear-gradient(135deg, #1a365d, #2c5282); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <i class="bi bi-headset"></i>
+                                    Contact Support
+                                </button>
+                                
+                                <button style="width: 100%; padding: 16px; background: white; color: #2563eb; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <i class="bi bi-house"></i>
+                                    Back to Home
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Footer -->
+                    <div class="mobile-footer">
+                        <div class="nav-item">
+                            <i class="bi bi-house"></i>
+                            <div class="nav-label">Home</div>
+
+                        </div>
+                        <div class="nav-item active">
+                            <i class="bi bi-credit-card"></i>
+                            <div class="nav-label">Cards</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-wallet2"></i>
+                            <div class="nav-label">Wallet</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-person"></i>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Transfer to Other Card Screen -->
+        <div class="wireframe">
+            <div class="wireframe-title">Transfer to Other Card</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="mobile-header">
+                        <div class="back-button"><i class="bi bi-arrow-left"></i></div>
+                        <div class="screen-title">Transfer</div>
+                        <div style="width: 36px;"></div>
+                    </div>
+                    <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                        <!-- Card Summary -->
+                        <div style="background: white; border-radius: 16px; padding: 16px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center;">
+                                    <div style="width: 40px; height: 40px; border-radius: 10px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                        <img src='https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png' alt='Mastercard' style='width: 30px; height: 18px;'>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 15px; font-weight: 600; color: #1e293b;">FinApp Platinum</div>
+                                        <div style="font-size: 13px; color: #64748b;">**** 4589</div>
+                                    </div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-size: 13px; color: #64748b;">Available</div>
+                                    <div style="font-size: 16px; font-weight: 600; color: #1e293b;">$2,450.00</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recipient Selection -->
+                        <div style="background: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 16px;">Select Recipient</h2>
+                            
+                            <!-- Search Bar -->
+                            <div style="position: relative; margin-bottom: 20px;">
+                                <input type="text" placeholder="Search by name or card number" style="width: 100%; padding: 12px 12px 12px 40px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 14px; color: #1e293b;">
+                                <i class="bi bi-search" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 16px;"></i>
+                            </div>
+                            
+                            <!-- Recent Recipients -->
+                            <div style="margin-bottom: 12px; font-size: 14px; color: #64748b;">Recent Recipients</div>
+                            
+                            <!-- Recipient Item -->
+                            <div style="display: flex; align-items: center; padding: 12px; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s ease;" onmouseover="this.style.backgroundColor='#f8fafc'" onmouseout="this.style.backgroundColor='transparent'">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-weight: 600; color: #64748b;">SJ</div>
+                                <div style="flex: 1;">
+                                    <div style="font-size: 15px; font-weight: 600; color: #1e293b;">Sarah Johnson</div>
+                                    <div style="font-size: 13px; color: #64748b;">FinApp Card **** 7823</div>
+                                </div>
+                                <div style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid #e2e8f0; display: flex; align-items: center; justify-content: center; pointer-events: none;">
+                                    <div style="width: 14px; height: 14px; background: white; border-radius: 50%;"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Recipient Item -->
+                            <div style="display: flex; align-items: center; padding: 12px; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s ease; background: #f1f5fa;" onmouseover="this.style.backgroundColor='#f1f5fa'" onmouseout="this.style.backgroundColor='#f1f5fa'">
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: #dbeafe; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-weight: 600; color: #2563eb;">MD</div>
+                                <div style="flex: 1;">
+                                    <div style="font-size: 15px; font-weight: 600; color: #1e293b;">Michael Davis</div>
+                                    <div style="font-size: 13px; color: #64748b;">FinApp Card **** 3456</div>
+                                </div>
+                                <div style="width: 24px; height: 24px; border-radius: 50%; border: 2px solid #2563eb; display: flex; align-items: center; justify-content: center; pointer-events: none;">
+                                    <div style="width: 14px; height: 14px; background: #2563eb; border-radius: 50%;"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Add New Recipient Button -->
+                            <button style="width: 100%; padding: 12px; background: white; color: #2563eb; border: 1px dashed #2563eb; border-radius: 12px; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; margin-top: 16px;">
+                                <i class="bi bi-plus-circle"></i> Add New Recipient
+                            </button>
+                        </div>
+                        
+                        <!-- Transfer Amount -->
+                        <div style="background: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 16px;">Amount</h2>
+                            
+                            <!-- Amount Input -->
+                            <div style="position: relative; margin-bottom: 8px;">
+                                <input type="text" value="120.00" style="width: 100%; padding: 16px 20px 16px 40px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 24px; font-weight: 700; color: #1e293b;">
+                                <div style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #1e293b; font-size: 24px; font-weight: 700;">$</div>
+                            </div>
+                            
+                            <div style="font-size: 13px; color: #64748b; margin-bottom: 16px;">Available Balance: $2,450.00</div>
+                            
+                            <!-- Quick Amount Buttons -->
+                            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                                <button style="flex: 1; padding: 10px; background: #f1f5f9; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; color: #1e293b; cursor: pointer;">$50</button>
+                                <button style="flex: 1; padding: 10px; background: #f1f5f9; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; color: #1e293b; cursor: pointer;">$100</button>
+                                <button style="flex: 1; padding: 10px; background: #f1f5f9; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; color: #1e293b; cursor: pointer;">$200</button>
+                            </div>
+                            
+                            <!-- Note Field -->
+                            <div style="margin-bottom: 16px;">
+                                <label style="display: block; font-size: 14px; color: #64748b; margin-bottom: 8px;">Note (Optional)</label>
+                                <input type="text" placeholder="What's this for?" style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 14px; color: #1e293b;">
+                            </div>
+                            
+                            <!-- Save Recipient Toggle -->
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="font-size: 14px; color: #1e293b;">Save recipient for future transfers</div>
+                                <label class="switch" style="position: relative; display: inline-block; width: 40px; height: 24px;">
+                                    <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                                    <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #2563eb; border-radius: 34px; transition: .4s;">
+                                        <span style="position: absolute; content: ''; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: .4s; transform: translateX(16px);"></span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Transfer Summary -->
+                        <div style="background: #f1f5fa; border-radius: 16px; padding: 16px; margin-bottom: 24px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <div style="font-size: 14px; color: #64748b;">From</div>
+                                <div style="font-size: 14px; color: #1e293b; font-weight: 500;">FinApp Platinum **** 4589</div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <div style="font-size: 14px; color: #64748b;">To</div>
+                                <div style="font-size: 14px; color: #1e293b; font-weight: 500;">Michael Davis **** 3456</div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <div style="font-size: 14px; color: #64748b;">Amount</div>
+                                <div style="font-size: 14px; color: #1e293b; font-weight: 500;">$120.00</div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <div style="font-size: 14px; color: #64748b;">Fee</div>
+                                <div style="font-size: 14px; color: #1e293b; font-weight: 500;">$0.00</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <button class="btn-primary">Transfer Now</button>
+                            <button style="width: 100%; padding: 16px; background: white; color: #64748b; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 16px; font-weight: 500; cursor: pointer;">Cancel</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Footer -->
+                    <div class="mobile-footer">
+                        <div class="nav-item">
+                            <i class="bi bi-house"></i>
+                            <div class="nav-label">Home</div>
+
+                        </div>
+                        <div class="nav-item active">
+                            <i class="bi bi-credit-card"></i>
+                            <div class="nav-label">Cards</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-wallet2"></i>
+                            <div class="nav-label">Wallet</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-person"></i>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Spending Analysis Screen -->
+        <div class="wireframe">
+            <div class="wireframe-title">Spending Analysis</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="mobile-header">
+                        <div class="back-button"><i class="bi bi-arrow-left"></i></div>
+                        <div class="screen-title">Spending Analysis</div>
+                        <div style="width: 36px;"></div>
+                    </div>
+                    <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                        <!-- Card Summary -->
+                        <div style="background: white; border-radius: 16px; padding: 16px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="display: flex; align-items: center;">
+                                    <div style="width: 40px; height: 40px; border-radius: 10px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
+                                        <img src='https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png' alt='Mastercard' style='width: 30px; height: 18px;'>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 15px; font-weight: 600; color: #1e293b;">FinApp Platinum</div>
+                                        <div style="font-size: 13px; color: #64748b;">**** 4589</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Time Period Selector -->
+                        <div style="display: flex; border-radius: 12px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                            <button style="flex: 1; background: #2563eb; color: white; border: none; padding: 12px; font-size: 13px; font-weight: 600; cursor: pointer;">
+                                This Month
+                            </button>
+                            <button style="flex: 1; background: white; color: #64748b; border: none; padding: 12px; font-size: 13px; font-weight: 600; cursor: pointer;">
+                                Last Month
+                            </button>
+                            <button style="flex: 1; background: white; color: #64748b; border: none; padding: 12px; font-size: 13px; font-weight: 600; cursor: pointer;">
+                                3 Months
+                            </button>
+                            <button style="flex: 1; background: white; color: #64748b; border: none; padding: 12px; font-size: 13px; font-weight: 600; cursor: pointer;">
+                                Custom
+                            </button>
+                        </div>
+                        
+                        <!-- Overview Metrics -->
+                        <div style="background: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 16px;">Overview</h2>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                                <div>
+                                    <div style="font-size: 13px; color: #64748b; margin-bottom: 4px;">Total Spent</div>
+                                    <div style="font-size: 20px; font-weight: 700; color: #dc2626;">$2,875.32</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 13px; color: #64748b; margin-bottom: 4px;">Total Income</div>
+                                    <div style="font-size: 20px; font-weight: 700; color: #059669;">$5,000.00</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 13px; color: #64748b; margin-bottom: 4px;">Balance Change</div>
+                                    <div style="font-size: 18px; font-weight: 700; color: #059669;">+$2,124.68</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 13px; color: #64748b; margin-bottom: 4px;">vs Last Month</div>
+                                    <div style="font-size: 18px; font-weight: 700; color: #059669; display: flex; align-items: center;">
+                                        <i class="bi bi-arrow-down" style="margin-right: 4px;"></i> -12%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Spending Trends -->
+                        <div style="background: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 16px;">Spending Trends</h2>
+                            
+                            <!-- Trend Chart Placeholder -->
+                            <div style="width: 100%; height: 160px; background: #f8fafc; border-radius: 8px; margin-bottom: 20px; position: relative; overflow: hidden;">
+                                <!-- Line -->
+                                <div style="position: absolute; bottom: 30px; left: 0; right: 0; height: 2px; background: #e2e8f0;"></div>
+                                <div style="position: absolute; bottom: 60px; left: 0; right: 0; height: 2px; background: #e2e8f0;"></div>
+                                <div style="position: absolute; bottom: 90px; left: 0; right: 0; height: 2px; background: #e2e8f0;"></div>
+                                <div style="position: absolute; bottom: 120px; left: 0; right: 0; height: 2px; background: #e2e8f0;"></div>
+                                
+                                <!-- Trend Line -->
+                                <svg width="100%" height="100%" style="position: absolute; top: 0; left: 0;">
+                                    <path d="M30,100 L60,80 L90,110 L120,90 L150,70 L180,85 L210,60 L240,50 L270,65 L300,25" 
+                                        stroke="#2563eb" 
+                                        fill="none" 
+                                        stroke-width="3"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+                                    <path d="M30,100 L60,80 L90,110 L120,90 L150,70 L180,85 L210,60 L240,50 L270,65 L300,25 L300,140 L30,140 Z" 
+                                        fill="url(#blueGradient)" 
+                                        opacity="0.2"/>
+                                    <defs>
+                                        <linearGradient id="blueGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#2563eb; stop-opacity:0.5" />
+                                            <stop offset="100%" style="stop-color:#2563eb; stop-opacity:0" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                                
+                                <!-- X-axis Labels -->
+                                <div style="position: absolute; bottom: 10px; width: 100%; display: flex; justify-content: space-around;">
+                                    <div style="font-size: 10px; color: #64748b;">1</div>
+                                    <div style="font-size: 10px; color: #64748b;">5</div>
+                                    <div style="font-size: 10px; color: #64748b;">10</div>
+                                    <div style="font-size: 10px; color: #64748b;">15</div>
+                                    <div style="font-size: 10px; color: #64748b;">20</div>
+                                    <div style="font-size: 10px; color: #64748b;">25</div>
+                                    <div style="font-size: 10px; color: #64748b;">30</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Weekly Summary -->
+                            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                <div style="flex: 1; background: #f1f5f9; border-radius: 10px; padding: 12px; text-align: center;">
+                                    <div style="font-size: 12px; color: #64748b; margin-bottom: 2px;">This Week</div>
+                                    <div style="font-size: 16px; font-weight: 700; color: #dc2626;">$562.45</div>
+                                </div>
+                                <div style="flex: 1; background: #f1f5f9; border-radius: 10px; padding: 12px; text-align: center;">
+                                    <div style="font-size: 12px; color: #64748b; margin-bottom: 2px;">Last Week</div>
+                                    <div style="font-size: 16px; font-weight: 700; color: #dc2626;">$649.78</div>
+                                </div>
+                                <div style="flex: 1; background: #f1f5f9; border-radius: 10px; padding: 12px; text-align: center;">
+                                    <div style="font-size: 12px; color: #64748b; margin-bottom: 2px;">Change</div>
+                                    <div style="font-size: 16px; font-weight: 700; color: #059669;">-13.4%</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                            <button style="flex: 1; padding: 14px; background: white; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 15px; font-weight: 600; color: #2563eb; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;">
+                                <i class="bi bi-sliders"></i> Set Budget
+                            </button>
+                            <button style="flex: 1; padding: 14px; background: white; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 15px; font-weight: 600; color: #2563eb; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;">
+                                <i class="bi bi-download"></i> Export
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Footer -->
+                    <div class="mobile-footer">
+                        <div class="nav-item">
+                            <i class="bi bi-house"></i>
+                            <div class="nav-label">Home</div>
+
+                        </div>
+                        <div class="nav-item active">
+                            <i class="bi bi-credit-card"></i>
+                            <div class="nav-label">Cards</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-wallet2"></i>
+                            <div class="nav-label">Wallet</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-person"></i>
+                            <div class="nav-label">Profile</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- Transfer Confirmation Popup -->
+<div class="wireframe">
+    <div class="wireframe-title">Transfer Confirmation</div>
+    <div class="wireframe-content">
+        <div class="mobile-frame">
+            <div class="screen-content" style="background: rgba(0,0,0,0.5); padding: 0; position: relative;">
+                <!-- Main content blurred in background -->
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; filter: blur(4px); background: #f8fafc; z-index: 1;"></div>
+                
+                <!-- Confirmation Popup -->
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; background: white; border-radius: 20px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 10;">
+                    <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                        <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 16px;">Confirm Transfer</h2>
+                        
+                        <!-- Transfer Details -->
+                        <div style="width: 100%; background: #f8fafc; border-radius: 12px; padding: 16px; margin-bottom: 24px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                                <div style="font-size: 14px; color: #64748b;">To</div>
+                                <div style="font-size: 14px; font-weight: 500; color: #1e293b; text-align: right;">Michael Davis</div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <div style="font-size: 14px; color: #64748b;">Amount</div>
+                                <div style="font-size: 16px; font-weight: 600; color: #1e293b; text-align: right;">$120.00</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+                            <button style="width: 100%; padding: 14px; background: #2563eb; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;">Confirm</button>
+                            <button style="width: 100%; padding: 14px; background: white; color: #64748b; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 15px; font-weight: 500; cursor: pointer;">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Transfer Success Screen -->
+<div class="wireframe">
+    <div class="wireframe-title">Transfer Success</div>
+    <div class="wireframe-content">
+        <div class="mobile-frame">
+            <div class="mobile-header">
+                <div class="back-button"><i class="bi bi-arrow-left"></i></div>
+                <div class="screen-title">Transfer Status</div>
+                <div style="width: 36px;"></div>
+            </div>
+            <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                <!-- Success Content -->
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center;">
+                    <!-- Success Illustration -->
+                    <div style="width: 160px; height: 160px; margin-bottom: 30px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                        <div style="font-size: 70px; color: #059669;">
+                            <i class="bi bi-check-circle-fill"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Headline and description -->
+                    <h1 style="font-size: 28px; font-weight: 700; color: #1e293b; margin-bottom: 16px;">Transfer Initiated!</h1>
+                    <p style="font-size: 16px; color: #64748b; margin-bottom: 30px; max-width: 300px;">Your transfer has been successfully initiated and is being processed.</p>
+                    
+                    <!-- Transfer Details Card -->
+                    <div style="width: 100%; background: white; border-radius: 16px; padding: 24px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                        <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 20px; text-align: left;">Transfer Details</h2>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+                            <div style="font-size: 15px; color: #64748b;">Status</div>
+                            <div style="font-size: 15px; font-weight: 600; color: #f59e0b; display: flex; align-items: center; gap: 8px;">
+                                <i class="bi bi-clock-history"></i> Processing
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+                            <div style="font-size: 15px; color: #64748b;">Transaction ID</div>
+                            <div style="font-size: 15px; font-weight: 600; color: #1e293b;">#TRX-5698742</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+                            <div style="font-size: 15px; color: #64748b;">Date & Time</div>
+                            <div style="font-size: 15px; font-weight: 600; color: #1e293b;">Apr 14, 2024 • 3:45 PM</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+                        <!-- Action Buttons -->
+                        <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+                            <button style="width: 100%; padding: 14px; background: #059669; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;">Confirm</button>
+                            <button style="width: 100%; padding: 14px; background: white; color: #64748b; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 15px; font-weight: 500; cursor: pointer;">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Top-up Success Screen -->
+<div class="wireframe">
+    <div class="wireframe-title">Top-up Success</div>
+    <div class="wireframe-content">
+        <div class="mobile-frame">
+            <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                <!-- Success Content -->
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center;">
+                    <!-- Success Illustration -->
+                    <div style="width: 80px; height: 80px; margin-bottom: 24px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <div style="font-size: 40px; color: #059669;">
+                            <i class="bi bi-check-circle-fill"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Headline and description -->
+                    <h1 style="font-size: 24px; font-weight: 700; color: #1e293b; margin-bottom: 12px;">Top-up Successful!</h1>
+                    
+                    <!-- Top-up Details Card -->
+                    <div style="width: 100%; background: white; border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <div style="font-size: 15px; color: #64748b;">From</div>
+                            <div style="font-size: 15px; font-weight: 600; color: #1e293b;">Fiat Account</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="font-size: 15px; color: #64748b;">Amount</div>
+                            <div style="font-size: 18px; font-weight: 700; color: #1e293b;">$500.00</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div style="width: 100%; display: flex; flex-direction: column; gap: 16px;">
+                        <button style="width: 100%; padding: 16px; background: #059669; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;">
+                            Back to Dashboard
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Top-up Confirmation Popup -->
+<div class="wireframe">
+    <div class="wireframe-title">Top-up Confirmation</div>
+    <div class="wireframe-content">
+        <div class="mobile-frame">
+            <div class="screen-content" style="background: rgba(0,0,0,0.5); padding: 0; position: relative;">
+                <!-- Main content blurred in background -->
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; filter: blur(4px); background: #f8fafc; z-index: 1;"></div>
+                
+                <!-- Confirmation Popup -->
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; background: white; border-radius: 20px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 10;">
+                    <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                        <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 16px;">Confirm Top-up</h2>
+                        
+                        <!-- Top-up Details -->
+                        <div style="width: 100%; background: #f8fafc; border-radius: 12px; padding: 16px; margin-bottom: 24px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                                <div style="font-size: 14px; color: #64748b;">From</div>
+                                <div style="font-size: 14px; font-weight: 500; color: #1e293b; text-align: right;">Fiat Account</div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <div style="font-size: 14px; color: #64748b;">Amount</div>
+                                <div style="font-size: 16px; font-weight: 600; color: #1e293b; text-align: right;">$500.00</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+                            <button style="width: 100%; padding: 14px; background: #059669; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;">Confirm</button>
+                            <button style="width: 100%; padding: 14px; background: white; color: #64748b; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 15px; font-weight: 500; cursor: pointer;">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Top-up Success Screen -->
+<div class="wireframe">
+    <div class="wireframe-title">Top-up Success</div>
+    <div class="wireframe-content">
+        <div class="mobile-frame">
+            <div class="mobile-header">
+                <div class="back-button"><i class="bi bi-arrow-left"></i></div>
+                <div class="screen-title">Top-up Status</div>
+                <div style="width: 36px;"></div>
+            </div>
+            <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                <!-- Success Content -->
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center;">
+                    <!-- Success Illustration -->
+                    <div style="width: 160px; height: 160px; margin-bottom: 30px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                        <div style="font-size: 70px; color: #059669;">
+                            <i class="bi bi-check-circle-fill"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Headline and description -->
+                    <h1 style="font-size: 28px; font-weight: 700; color: #1e293b; margin-bottom: 16px;">Top-up Initiated!</h1>
+                    <p style="font-size: 16px; color: #64748b; margin-bottom: 30px; max-width: 300px;">Your card top-up request has been submitted and is being processed.</p>
+                    
+                    <!-- Top-up Details Card -->
+                    <div style="width: 100%; background: white; border-radius: 16px; padding: 24px; margin-bottom: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                        <h2 style="font-size: 18px; font-weight: 600; color: #1e293b; margin-bottom: 20px; text-align: left;">Top-up Details</h2>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+                            <div style="font-size: 15px; color: #64748b;">Status</div>
+                            <div style="font-size: 15px; font-weight: 600; color: #f59e0b; display: flex; align-items: center; gap: 8px;">
+                                <i class="bi bi-clock-history"></i> Processing
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+                            <div style="font-size: 15px; color: #64748b;">Transaction ID</div>
+                            <div style="font-size: 15px; font-weight: 600; color: #1e293b;">#TOP-8721456</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+                            <div style="font-size: 15px; color: #64748b;">Date & Time</div>
+                            <div style="font-size: 15px; font-weight: 600; color: #1e293b;">Apr 14, 2024 • 4:20 PM</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+                            <div style="font-size: 15px; color: #64748b;">From</div>
+                            <div style="font-size: 15px; font-weight: 600; color: #1e293b;">Fiat Account</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+                            <div style="font-size: 15px; color: #64748b;">To</div>
+                            <div style="font-size: 15px; font-weight: 600; color: #1e293b;">FinApp Platinum **** 4589</div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="font-size: 15px; color: #64748b;">Amount</div>
+                            <div style="font-size: 18px; font-weight: 700; color: #1e293b;">$500.00</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Estimated Completion -->
+                    <div style="width: 100%; background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 12px; padding: 16px; margin-bottom: 30px; display: flex; align-items: flex-start;">
+                        <i class="bi bi-info-circle" style="color: #0284c7; font-size: 18px; margin-right: 12px; flex-shrink: 0; margin-top: 2px;"></i>
+                        <div style="text-align: left;">
+                            <p style="font-size: 14px; color: #0369a1; margin: 0 0 8px 0; font-weight: 600;">Estimated Completion Time</p>
+                            <p style="font-size: 14px; color: #0369a1; margin: 0;">Top-ups are typically processed within 30 minutes. You will receive a notification once funds are available in your card.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div style="width: 100%; display: flex; flex-direction: column; gap: 16px;">
+                        <button style="width: 100%; padding: 16px; background: linear-gradient(135deg, #1a365d, #2c5282); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <i class="bi bi-credit-card"></i>
+                            Back to Card Dashboard
+                        </button>
+                        
+                        <button style="width: 100%; padding: 16px; background: white; color: #2563eb; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <i class="bi bi-clock-history"></i>
+                            View Transaction History
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Footer -->
+            <div class="mobile-footer">
+                <div class="nav-item">
+                    <i class="bi bi-house"></i>
+                    <div class="nav-label">Home</div>
+
+                </div>
+                <div class="nav-item active">
+                    <i class="bi bi-credit-card"></i>
+                    <div class="nav-label">Cards</div>
+                </div>
+                <div class="nav-item">
+                    <i class="bi bi-wallet2"></i>
+                    <div class="nav-label">Wallet</div>
+                </div>
+                <div class="nav-item">
+                    <i class="bi bi-person"></i>
+                    <div class="nav-label">Profile</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

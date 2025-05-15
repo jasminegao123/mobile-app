@@ -5,7 +5,5 @@ alwaysApply: true
 ---
 
 # help me create a wireframe for mobile app with provided document, follow the mobile app's best practice, and reasonable user flow
-every time you update code, please keep the globle component like nav bar, the button format , font size, font color and so on, make each screen's style and format and layout consistent, with proper spacing for mobile view, and if i ask you to change one screen or add one screen, please also keep the consistent logic, and only update the screen i mentioned, don't adjust other code
-
-- You can @ files here
+every time you update code, please keep the globle component like nav bar, the button format , font size, font color and so on, make each screen's style and format and layout consistent
 - You can use markdown but dont have to

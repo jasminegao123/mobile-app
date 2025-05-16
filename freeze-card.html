@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freeze Card</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+        }
+
+        .mobile-frame {
+            max-width: 440px;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: white;
+            position: relative;
+        }
+
+        .mobile-header {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .back-button {
+            width: 36px;
+            height: 36px;
+            background-color: #f8fafc;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            font-size: 18px;
+            color: #64748b;
+            transition: all 0.2s ease;
+            border: 1px solid #f1f5f9;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #f1f5f9;
+            color: #1a365d;
+        }
+
+        .screen-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .screen-content {
+            padding: 20px;
+            background: #f8fafc;
+            min-height: calc(100vh - 64px);
+        }
+
+        .card-display {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #1a365d, #2c5282, #3182ce);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .card-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 0.5%),
+                            radial-gradient(circle at 90% 80%, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.03) 0.5%);
+            opacity: 0.8;
+        }
+
+        .card-chip {
+            position: absolute;
+            top: 75px;
+            left: 24px;
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(135deg, #d4af37, #f2d675, #d4af37);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
+        }
+
+        .card-number {
+            position: absolute;
+            bottom: 60px;
+            left: 24px;
+            color: white;
+            font-size: 18px;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .card-details {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            right: 24px;
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .card-holder {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-expiry {
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .mastercard-logo {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 50px;
+            height: 32px;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
+        }
+
+        .card-status {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .status-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .status-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 20px;
+        }
+
+        .status-icon.active {
+            background: #dcfce7;
+            color: #059669;
+        }
+
+        .status-icon.frozen {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .status-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .status-description {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1a365d, #2c5282);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="mobile-frame">
+        <div class="mobile-header">
+            <div class="back-button">
+                <i class="bi bi-arrow-left"></i>
+            </div>
+            <div class="screen-title">Freeze Card</div>
+            <div style="width: 36px;"></div>
+        </div>
+        
+        <div class="screen-content">
+            <!-- Card Display -->
+            <div class="card-display">
+                <div class="card-pattern"></div>
+                <div class="card-chip"></div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard" class="mastercard-logo">
+                <div class="card-number">**** **** **** 1234</div>
+                <div class="card-details">
+                    <div class="card-holder">JOHN DOE</div>
+                    <div class="card-expiry">12/25</div>
+                </div>
+            </div>
+
+            <!-- Card Status -->
+            <div class="card-status">
+                <div class="status-header">
+                    <div class="status-icon active">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                    <div>
+                        <div class="status-text">Card is Active</div>
+                        <div class="status-description">Your card is currently active and ready to use</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-primary">
+                    <i class="bi bi-snow"></i>
+                    Freeze Card
+                </button>
+                <button class="btn btn-secondary">
+                    <i class="bi bi-question-circle"></i>
+                    Learn More
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Disclosure Popup</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+       
+        body {
+            background-color: #f7f9fc;
+            padding: 20px;
+            color: #2a3342;
+        }
+       
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+       
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+        }
+       
+        h1 {
+            color: #1e293b;
+            margin-bottom: 12px;
+            font-size: 32px;
+            font-weight: 700;
+        }
+       
+        .subtitle {
+            color: #64748b;
+            font-size: 18px;
+            margin-bottom: 24px;
+        }
+       
+        .wireframe {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: block;
+            border: 1px solid #f1f5f9;
+            break-inside: avoid;
+            page-break-inside: avoid;
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+       
+        .wireframe-header {
+            background-color: #f8fafc;
+            padding: 18px 20px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+       
+        .wireframe-title {
+            font-size: 18px;
+            color: #1e293b;
+            font-weight: 600;
+        }
+       
+        .wireframe-content {
+            padding: 0;
+            width: 100%;
+            height: 740px;
+            position: relative;
+            overflow: hidden;
+        }
+       
+        /* Mobile Frame Styles */
+        .mobile-frame {
+            width: 375px; /* iPhone standard width */
+            height: 740px; /* Approximate iPhone height ratio */
+            border: 10px solid #e2e8f0; /* Frame border */
+            border-radius: 32px;
+            background-color: white;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            margin: 0 auto; /* Center the frame */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+        }
+       
+        /* Device Details */
+        .device-details {
+            position: absolute;
+            top: 0;
+            width: 125px;
+            height: 25px;
+            background-color: #e2e8f0;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .device-details::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background-color: #64748b;
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            height: 44px;
+            width: 100%;
+            padding: 0 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            background-color: #fff;
+        }
+        
+        .status-bar-time {
+            font-weight: 600;
+        }
+        
+        .status-bar-icons {
+            display: flex;
+            gap: 6px;
+        }
+        
+        /* Home Indicator */
+        .home-indicator {
+            position: absolute;
+            bottom: 8px;
+            width: 140px;
+            height: 5px;
+            background-color: #cbd5e1;
+            border-radius: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+       
+        /* Mobile Header Styles */
+        .mobile-header {
+            height: 56px;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            border-bottom: 1px solid #f1f5f9;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            width: 100%;
+        }
+       
+        .logo {
+            font-weight: 700;
+            font-size: 18px;
+            color: #1e293b;
+            background: linear-gradient(135deg, #3366cc, #5e81f4);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+       
+        /* Screen content - use this for screens with scrollable content */
+        .screen-content {
+            flex: 1; 
+            overflow-y: auto;
+            height: calc(100% - 44px); /* Subtract status bar height */
+            position: relative;
+        }
+        
+        /* Popup Overlay Styles */
+        .popup-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .popup-container {
+            width: 85%;
+            max-height: 80%;
+            background-color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .popup-header {
+            padding: 16px;
+            background-color: #f8fafc;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .popup-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .close-button {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #f1f5f9;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            cursor: pointer;
+        }
+        
+        .popup-content {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .disclaimer-section {
+            margin-bottom: 16px;
+        }
+        
+        .disclaimer-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        
+        .disclaimer-text {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+        
+        .disclaimer-list {
+            list-style: none;
+            margin-left: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .disclaimer-list li {
+            position: relative;
+            padding-left: 16px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+        
+        .disclaimer-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #3366cc;
+        }
+        
+        .popup-actions {
+            padding: 16px;
+            border-top: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 14px 0;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+        
+        .btn-secondary {
+            background-color: #f1f5f9;
+            color: #64748b;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3366cc, #5e81f4);
+            color: white;
+            box-shadow: 0 4px 10px rgba(51, 102, 204, 0.15);
+        }
+        
+        /* Media query for mobile screens */
+        @media (max-width: 768px) {
+            .wireframe-content {
+                height: calc(100vh - 100px);
+            }
+            
+            .mobile-frame {
+                width: 100%;
+                height: 100%;
+                border: none;
+                border-radius: 0;
+            }
+            
+            .device-details,
+            .home-indicator {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Risk Disclosure Popup</h1>
+            <p class="subtitle">Disclaimer and risk notice popup for financial app</p>
+        </header>
+       
+        <div class="wireframe">
+            <div class="wireframe-header">
+                <div class="wireframe-title">Risk Disclosure Popup</div>
+            </div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="device-details"></div>
+                    <div class="status-bar">
+                        <div class="status-bar-time">9:41</div>
+                        <div class="status-bar-icons">
+                            <span>📶</span>
+                            <span>📡</span>
+                            <span>🔋</span>
+                        </div>
+                    </div>
+                    
+                    <!-- App content underneath overlay -->
+                    <div class="screen-content">
+                        <div style="padding: 16px;">
+                            <div style="margin-bottom: 20px;">
+                                <div style="font-size: 22px; font-weight: 700; color: #1e293b; margin-bottom: 10px;">Buy Bitcoin</div>
+                                <div style="font-size: 14px; color: #64748b;">Fill in the amount you want to purchase</div>
+                            </div>
+                            
+                            <div style="background-color: #f8fafc; border-radius: 16px; padding: 18px; margin-bottom: 20px; border: 1px solid #f1f5f9;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                    <div style="font-size: 14px; color: #64748b;">You Pay</div>
+                                    <div style="font-size: 14px; color: #64748b;">Balance: $12,345.67</div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="font-size: 24px; font-weight: 700; color: #1e293b;">$1,000.00</div>
+                                    <div style="font-size: 16px; color: #1e293b; font-weight: 500;">USD</div>
+                                </div>
+                            </div>
+                            
+                            <div style="background-color: #f8fafc; border-radius: 16px; padding: 18px; margin-bottom: 30px; border: 1px solid #f1f5f9;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                                    <div style="font-size: 14px; color: #64748b;">You Receive</div>
+                                    <div style="font-size: 14px; color: #64748b;">1 BTC ≈ $43,250.00</div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="font-size: 24px; font-weight: 700; color: #1e293b;">0.02312 BTC</div>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <div style="width: 24px; height: 24px; background-color: #f7931a; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 16px;">₿</div>
+                                        <div style="font-size: 16px; color: #1e293b; font-weight: 500;">BTC</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Popup overlay -->
+                    <div class="popup-overlay">
+                        <div class="popup-container">
+                            <div class="popup-header">
+                                <div class="popup-title">Risk Disclosure</div>
+                                <button class="close-button">✕</button>
+                            </div>
+                            <div class="popup-content">
+                                <div class="disclaimer-section">
+                                    <div class="disclaimer-title">Important Notice</div>
+                                    <p class="disclaimer-text">
+                                        Before proceeding with any transaction, please read this risk disclosure statement carefully. Cryptocurrency investing involves significant risks and is not suitable for all investors.
+                                    </p>
+                                </div>
+                                
+                                <div class="disclaimer-section">
+                                    <div class="disclaimer-title">Investment Risks</div>
+                                    <ul class="disclaimer-list">
+                                        <li>The value of cryptocurrencies can fluctuate significantly in a short period of time.</li>
+                                        <li>Past performance is not indicative of future results.</li>
+                                        <li>You may lose some or all of your invested capital.</li>
+                                        <li>Cryptocurrency markets can be highly volatile and unpredictable.</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="disclaimer-section">
+                                    <div class="disclaimer-title">Technical Risks</div>
+                                    <ul class="disclaimer-list">
+                                        <li>Blockchain transactions are generally irreversible.</li>
+                                        <li>Loss of private keys may result in permanent loss of assets.</li>
+                                        <li>Network congestion may delay transactions or increase fees.</li>
+                                        <li>Software vulnerabilities or cyberattacks could impact security.</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="disclaimer-section">
+                                    <div class="disclaimer-title">Regulatory Considerations</div>
+                                    <p class="disclaimer-text">
+                                        Cryptocurrency regulations vary by jurisdiction and are subject to change. You are responsible for complying with applicable laws in your jurisdiction. Tax implications may also apply to your cryptocurrency transactions.
+                                    </p>
+                                </div>
+                                
+                                <div class="disclaimer-section">
+                                    <div class="disclaimer-title">Acknowledgment</div>
+                                    <p class="disclaimer-text">
+                                        By clicking "I Accept," you acknowledge that you have read and understood these risks and are willing to proceed with the transaction. If you do not agree, click "Decline."
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="popup-actions">
+                                <button class="btn btn-secondary">Decline</button>
+                                <button class="btn btn-primary">I Accept</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="home-indicator"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simple interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const closeButton = document.querySelector('.close-button');
+            const declineButton = document.querySelector('.btn-secondary');
+            const acceptButton = document.querySelector('.btn-primary');
+            const popup = document.querySelector('.popup-overlay');
+            
+            // Close and decline buttons hide the popup
+            closeButton.addEventListener('click', function() {
+                alert('Popup closed - transaction canceled');
+            });
+            
+            declineButton.addEventListener('click', function() {
+                alert('Risk disclosure declined - transaction canceled');
+            });
+            
+            acceptButton.addEventListener('click', function() {
+                alert('Risk disclosure accepted - proceeding with transaction');
+            });
+        });
+    </script>
+</body>
+</html> 

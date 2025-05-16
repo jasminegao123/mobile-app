@@ -4,6 +4,9 @@ globs:
 alwaysApply: true
 ---
 
-# help me create a wireframe for mobile app with provided document, follow the mobile app's best practice, and reasonable user flow
-every time you update code, please keep the globle component like nav bar, the button format , font size, font color and so on, make each screen's style and format and layout consistent
+
+# help me create a wireframe for the mobile app based on the provided document, follow the best practices for mobile design and ensure a smooth user flow.
+when updating code, keep global components (nav bar, button styles, font sizes/colors) consistent, maintain layout and spacing for mobile view, if I ask for changes to a specific screen, only update that screen without altering the rest.
+
+- You can @ files here
 - You can use markdown but dont have to

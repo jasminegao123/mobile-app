@@ -98,7 +98,7 @@
 
         .mobile-frame {
             width: 100%;
-            max-width: 393px;
+            max-width: 440px;
             height: 1500px;
             background-color: #ffffff;
             border-radius: 44px;
@@ -106,6 +106,8 @@
             position: relative;
             margin: 0 auto;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
         }
 
         .mobile-header {
@@ -160,6 +162,7 @@
             position: relative;
             background-color: #f8fafc;
             padding-bottom: 80px;
+            flex: 1;
         }
 
         .screen-header {
@@ -364,31 +367,32 @@
             bottom: 0;
             left: 0;
             right: 0;
+            height: 80px;
             background-color: #ffffff;
-            padding: 12px 20px;
             border-top: 1px solid #f1f5f9;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            z-index: 10;
+            padding: 0 20px;
         }
 
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 8px 0;
-            flex: 1;
+            gap: 4px;
+            color: #64748b;
+            font-size: 12px;
+            cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .nav-item.active {
-            color: #1a365d;
+            color: #2563eb;
         }
 
         .nav-item i {
             font-size: 20px;
-            margin-bottom: 4px;
         }
 
         .nav-label {
@@ -499,10 +503,601 @@
             gap: 12px;
             padding: 0 20px;
         }
+
+        /* Login and Signup Specific Styles */
+        .auth-container {
+            padding: 32px 24px;
+        }
+
+        .auth-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .auth-subtitle {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 32px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            font-size: 14px;
+            color: #475569;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 48px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0 16px;
+            font-size: 16px;
+            color: #1e293b;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .input-field:focus {
+            border-color: #2563eb;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .auth-button {
+            width: 100%;
+            height: 48px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 16px;
+        }
+
+        .auth-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .social-button {
+            flex: 1;
+            height: 48px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: #ffffff;
+            color: #1e293b;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .social-button:hover {
+            background-color: #f8fafc;
+        }
+
+        .auth-links {
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .auth-link {
+            color: #2563eb;
+            text-decoration: none;
+            font-size: 14px;
+            margin: 0 8px;
+        }
+
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+
+        .otp-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .otp-input {
+            width: 48px;
+            height: 48px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            background-color: #ffffff;
+            color: #1e293b;
+            transition: all 0.2s ease;
+        }
+
+        .otp-input:focus {
+            border-color: #2563eb;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 24px 0;
+            color: #64748b;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .divider span {
+            padding: 0 16px;
+            font-size: 14px;
+        }
+
+        /* Additional Styles */
+        .progress-steps {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: #94a3b8;
+        }
+
+        .step.active {
+            color: #2563eb;
+        }
+
+        .step-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .step.active .step-number {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .step-label {
+            font-size: 12px;
+        }
+
+        .password-requirements {
+            background-color: #f8fafc;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .requirement i {
+            color: #22c55e;
+        }
+
+        .requirement.incomplete i {
+            color: #94a3b8;
+        }
+
+        .app-logo {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .logo-badge {
+            background-color: #2563eb;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 18px;
+            display: inline-block;
+        }
+
+        .language-selector {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 4px 12px;
+            border-radius: 100px;
+            background-color: #f1f5f9;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .phone-input {
+            display: flex;
+            gap: 8px;
+        }
+
+        .country-code {
+            width: 80px;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            color: #1e293b;
+        }
+
+        .terms-checkbox {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            margin: 24px 0;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .bottom-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .bottom-buttons button {
+            flex: 1;
+        }
+
+        .back-btn {
+            background-color: #f1f5f9;
+            color: #64748b;
+        }
+
+        .step-counter {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .otp-timer {
+            font-size: 14px;
+            color: #64748b;
+            margin: 8px 0;
+        }
+
+        /* Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e2e8f0;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #3b82f6;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(22px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .btn-primary:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
     <div class="wireframe-container">
+        <!-- Login Screen -->
+        <div class="wireframe">
+            <div class="wireframe-title">Login Screen</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="screen-content">
+                        <div class="language-selector">EN</div>
+                        <div class="auth-container">
+                            <div class="app-logo">
+                                <span class="logo-badge">FA</span>
+                            </div>
+                            
+                            <h1 class="auth-title">Welcome Back</h1>
+                            <p class="auth-subtitle">Log in to access your account</p>
+                            
+                            <div class="input-group">
+                                <label class="input-label">Email / Username</label>
+                                <input type="text" class="input-field" placeholder="Enter your email or username">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">Password</label>
+                                <input type="password" class="input-field" placeholder="Enter your password">
+                            </div>
+                            
+                            <div class="remember-me">
+                                <input type="checkbox" id="remember">
+                                <label for="remember">Remember me</label>
+                                <a href="#" class="auth-link" style="margin-left: auto;">Forgot password?</a>
+                            </div>
+                            
+                            <button class="auth-button">Login</button>
+                            
+                            <div class="divider"><span>Or continue with</span></div>
+                            
+                            <div class="social-login">
+                                <button class="social-button">
+                                    <i class="bi bi-google"></i>
+                                    Google
+                                </button>
+                                <button class="social-button">
+                                    <i class="bi bi-apple"></i>
+                                    Apple
+                                </button>
+                                <button class="social-button">
+                                    <i class="bi bi-fingerprint"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="auth-links">
+                                <span>Don't have an account?</span>
+                                <a href="#" class="auth-link">Sign up</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sign Up Screen 1 -->
+        <div class="wireframe">
+            <div class="wireframe-title">Sign Up Screen 1</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="screen-content">
+                        <div class="language-selector">EN</div>
+                        <div class="auth-container">
+                            <div class="app-logo">
+                                <span class="logo-badge">FA</span>
+                            </div>
+
+                            <div class="progress-steps">
+                                <div class="step active">
+                                    <div class="step-number">1</div>
+                                    <div class="step-label">Create Account</div>
+                                </div>
+                                <div class="step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-label">Verification</div>
+                                </div>
+                            </div>
+                            
+                            <h1 class="auth-title">Create Account</h1>
+                            <p class="auth-subtitle">Enter your details to get started</p>
+                            
+                            <div class="input-group">
+                                <label class="input-label">Email</label>
+                                <input type="email" class="input-field" placeholder="Enter your email">
+                            </div>
+
+                            <div style="display: flex; justify-content: flex-end;">
+                                <button class="auth-button" style="width: auto; padding: 0 20px;">Send OTP</button>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">Verification Code</label>
+                                <div class="otp-group">
+                                    <input type="text" class="otp-input" maxlength="1">
+                                    <input type="text" class="otp-input" maxlength="1">
+                                    <input type="text" class="otp-input" maxlength="1">
+                                    <input type="text" class="otp-input" maxlength="1">
+                                    <input type="text" class="otp-input" maxlength="1">
+                                    <input type="text" class="otp-input" maxlength="1">
+                                </div>
+                                <div class="otp-timer">Code expires in 05:00</div>
+                                <a href="#" class="auth-link">Resend Code</a>
+                            </div>
+
+                            <div class="input-group">
+                                <label class="input-label">Username</label>
+                                <input type="text" class="input-field" placeholder="Create a username">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">Password</label>
+                                <input type="password" class="input-field" placeholder="Create password">
+                                <div style="height: 4px; background: linear-gradient(to right, #22c55e 70%, #e2e8f0 70%); margin-top: 8px; border-radius: 4px;"></div>
+                                <div style="text-align: left; margin-top: 4px; font-size: 14px; color: #22c55e;">Strong password</div>
+                                <div class="password-requirements">
+                                    <div class="requirement">
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        At least 8 characters
+                                    </div>
+                                    <div class="requirement">
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        Contains uppercase letters
+                                    </div>
+                                    <div class="requirement incomplete">
+                                        <i class="bi bi-circle"></i>
+                                        Contains numbers
+                                    </div>
+                                    <div class="requirement incomplete">
+                                        <i class="bi bi-circle"></i>
+                                        Contains special characters
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">Confirm Password</label>
+                                <input type="password" class="input-field" placeholder="Confirm your password">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">Referral Code (Optional)</label>
+                                <input type="text" class="input-field" value="FRIEND123">
+                            </div>
+
+                            <div class="terms-checkbox">
+                                <input type="checkbox" id="terms">
+                                <label for="terms">
+                                    I agree to the <a href="#" class="auth-link">Terms & Conditions</a> and <a href="#" class="auth-link">Privacy Policy</a>
+                                </label>
+                            </div>
+                            
+                            <button class="auth-button">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sign Up Screen 2 -->
+        <div class="wireframe">
+            <div class="wireframe-title">Sign Up Screen 2</div>
+            <div class="wireframe-content">
+                <div class="mobile-frame">
+                    <div class="screen-content">
+                        <div class="language-selector">EN</div>
+                        <div class="auth-container">
+                            <div class="app-logo">
+                                <span class="logo-badge">FA</span>
+                            </div>
+
+                            <div class="progress-steps">
+                                <div class="step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-label">Create Account</div>
+                                </div>
+                                <div class="step active">
+                                    <div class="step-number">2</div>
+                                    <div class="step-label">Verification</div>
+                                </div>
+                            </div>
+                            
+                            <h1 class="auth-title">Contact Information</h1>
+                            <p class="auth-subtitle">Please verify your contact details</p>
+                            
+                            <div class="input-group">
+                                <label class="input-label">Phone Number</label>
+                                <div class="phone-input">
+                                    <div class="country-code">
+                                        <span>+1</span>
+                                        <i class="bi bi-chevron-down"></i>
+                                    </div>
+                                    <input type="tel" class="input-field" placeholder="Enter your phone number">
+                                </div>
+                            </div>
+
+                            <div style="display: flex; justify-content: flex-end;">
+                                <button class="auth-button" style="width: auto; padding: 0 20px;">Send OTP</button>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">Verification Code</label>
+                                <div class="otp-group">
+                                    <input type="text" class="otp-input" maxlength="1">
+                                    <input type="text" class="otp-input" maxlength="1">
+                                    <input type="text" class="otp-input" maxlength="1">
+                                    <input type="text" class="otp-input" maxlength="1">
+                                    <input type="text" class="otp-input" maxlength="1">
+                                    <input type="text" class="otp-input" maxlength="1">
+                                </div>
+                                <div class="otp-timer">Code expires in 05:00</div>
+                                <a href="#" class="auth-link">Resend Code</a>
+                            </div>
+
+                            <div class="bottom-buttons">
+                                <button class="auth-button back-btn">Back</button>
+                                <button class="auth-button">Next</button>
+                            </div>
+
+                            <div class="step-counter">Step 2 of 2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- No Card / Get Started Screen -->
         <div class="wireframe">
             <div class="wireframe-title">No Card / Get Started</div>
@@ -766,6 +1361,30 @@
                             <div style="padding: 0 18px;">
                                 <div style="height: 80px; background: repeating-linear-gradient(90deg, #e0e7ef, #e0e7ef 2px, transparent 2px, transparent 20px); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 14px;">[Chart Placeholder]</div>
                             </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Footer / Bottom Navigation Bar -->
+                    <div class="mobile-footer">
+                        <div class="nav-item">
+                            <i class="bi bi-house"></i>
+                            <div class="nav-label">Home</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-wallet2"></i>
+                            <div class="nav-label">Deposit</div>
+                        </div>
+                        <div class="nav-item active" style="color: #2563eb;">
+                            <i class="bi bi-credit-card" style="color: #2563eb;"></i>
+                            <div class="nav-label">Card</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-graph-up"></i>
+                            <div class="nav-label">Investment</div>
+                        </div>
+                        <div class="nav-item">
+                            <i class="bi bi-gear"></i>
+                            <div class="nav-label">Settings</div>
                         </div>
                     </div>
                 </div>
@@ -2513,11 +3132,102 @@
     </div>
 </div>
 
-
-
+<!-- Change PIN Screen -->
+<div class="wireframe">
+    <div class="wireframe-title">Change PIN Screen</div>
+    <div class="wireframe-content">
+        <div class="mobile-frame">
+            <div class="mobile-header">
+                <div class="back-button"><i class="bi bi-arrow-left"></i></div>
+                <div class="screen-title">Change PIN</div>
+                <div style="width: 36px;"></div>
+            </div>
+            <div class="screen-content" style="background: #f8fafc; padding: 20px;">
+                <!-- Card Display (Mini) -->
+                <div style="background: linear-gradient(135deg, #1a365d, #2c5282); border-radius: 16px; padding: 20px; color: white; margin-bottom: 24px; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    <div style="opacity: 0.8; font-size: 14px; margin-bottom: 8px;">Card Number</div>
+                    <div style="font-size: 16px; letter-spacing: 2px; font-family: 'Courier New', monospace;">•••• •••• •••• 4589</div>
+                    <div style="position: absolute; top: 20px; right: 20px; font-size: 12px;">12/25</div>
+                </div>
+                
+                <p style="color: #64748b; margin-bottom: 24px;">For security reasons, you'll need to verify your identity before changing your PIN.</p>
+                
+                <!-- Current PIN -->
+                <div class="input-group">
+                    <label class="input-label">Current PIN</label>
+                    <div style="display: flex; gap: 12px;">
+                        <input type="password" class="otp-input" maxlength="1">
+                        <input type="password" class="otp-input" maxlength="1">
+                        <input type="password" class="otp-input" maxlength="1">
+                        <input type="password" class="otp-input" maxlength="1">
+                    </div>
+                </div>
+                
+                <!-- New PIN -->
+                <div class="input-group">
+                    <label class="input-label">New PIN</label>
+                    <div style="display: flex; gap: 12px;">
+                        <input type="password" class="otp-input" maxlength="1">
+                        <input type="password" class="otp-input" maxlength="1">
+                        <input type="password" class="otp-input" maxlength="1">
+                        <input type="password" class="otp-input" maxlength="1">
+                    </div>
+                </div>
+                
+                <!-- Confirm New PIN -->
+                <div class="input-group">
+                    <label class="input-label">Confirm New PIN</label>
+                    <div style="display: flex; gap: 12px;">
+                        <input type="password" class="otp-input" maxlength="1">
+                        <input type="password" class="otp-input" maxlength="1">
+                        <input type="password" class="otp-input" maxlength="1">
+                        <input type="password" class="otp-input" maxlength="1">
+                    </div>
+                </div>
+                
+                <div style="margin-top: 16px;">
+                    <div style="font-size: 14px; color: #64748b; margin-bottom: 16px;">
+                        <i class="bi bi-info-circle"></i> Your PIN should:
+                    </div>
+                    <ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: #64748b;">
+                        <li style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                            <i class="bi bi-check-circle" style="color: #22c55e;"></i> Be 4 digits
+                        </li>
+                        <li style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                            <i class="bi bi-check-circle" style="color: #22c55e;"></i> Not use sequential numbers (e.g., 1234)
+                        </li>
+                        <li style="margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                            <i class="bi bi-check-circle" style="color: #22c55e;"></i> Not use repeated numbers (e.g., 1111)
+                        </li>
+                    </ul>
+                </div>
+                
+                <button class="btn-primary" style="margin-top: 32px;">Change PIN</button>
+            </div>
+            
+            <!-- Mobile Footer -->
+            <div class="mobile-footer">
+                <div class="nav-item">
+                    <i class="bi bi-house"></i>
+                    <div class="nav-label">Home</div>
+                </div>
+                <div class="nav-item active">
+                    <i class="bi bi-credit-card"></i>
+                    <div class="nav-label">Cards</div>
+                </div>
+                <div class="nav-item">
+                    <i class="bi bi-wallet2"></i>
+                    <div class="nav-label">Wallet</div>
+                </div>
+                <div class="nav-item">
+                    <i class="bi bi-person"></i>
+                    <div class="nav-label">Profile</div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
+    </div>
+</body>
+</html>
 
